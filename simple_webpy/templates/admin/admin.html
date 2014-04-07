@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>后台管理</title>
+		
+		<style>
+			body {width:100%; height:100%; margin:0px; padding:0px;}
+			#page {width:100%; height:100%;}
+			#page_left {height:100%; width:200px; float:left; position:absolute; left:0; z-index:1 }
+			#page_right {height:100%; float:left; width:100%; position:absolute; left:0; }
+			#page_left {background-color: rgb(52, 57, 61); color: rgb(149, 158, 165);}
+			#page_left ul a {color: rgb(149, 158, 165); text-decoration:none; display:block; padding:5px 20px;}
+			#page_left ul a:hover {background-color:rgb(149, 158, 165); color:white;}
+			#page_left li {line-height: 35px;}
+			ul,ul li {margin:0px ; padding:0px;}
+			ul li {list-style-type:none;}
+		</style>
+	</head>
+	<body>
+		<div id="page">
+			<div id="page_left">
+				<br/>
+				<div>
+					<span>你好管理员</span>
+					<span><a href="/admin/logout" style="font-size:14px; color:white;">注销</a></span>
+				</div>
+				<br/>
+				<br/>
+				<ul>
+					<a href="/admin/category"><li>子栏目管理</li></a>
+					<a href="/admin/article"><li>贴子管理</li></a>
+					<a href="/admin/reply"><li>评论管理</li></a>
+				</ul>
+			</div>
+			<div id="page_right">
+				<div id="main" style="margin-left:200px;">
+					<iframe src="category.html" width="100%" height="100%" frameborder=0 >
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

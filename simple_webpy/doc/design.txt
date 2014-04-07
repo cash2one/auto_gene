@@ -1,0 +1,10 @@
+webpy test
+
+
+======sql
+create table user (uid varchar(20) not null ,code varchar(20) not null ,name varchar(20) not null ,role tinyint not null ,dept tinyint  ,id int primary key auto_increment not null ,create_user_id int  ,update_user_id int  ,create_date date  ,update_date date  ) 
+create table insp_type (name varchar(100) not null ,ord tinyint not null default 1,valid tinyint  default 1,id int primary key auto_increment not null ,create_user_id int  ,update_user_id int  ,create_date date  ,update_date date  ) 
+create table insp_item (insp_type int not null ,title varchar(1000) not null ,ord tinyint not null default 1,valid tinyint  default 1,id int primary key auto_increment not null ,create_user_id int  ,update_user_id int  ,create_date date  ,update_date date  ) 
+create table insp_plan (user_id int not null ,insp_date varchar(1000) not null ,dept_id tinyint not null ,chain_id int not null ,id int primary key auto_increment not null ,create_user_id int  ,update_user_id int  ,create_date date  ,update_date date  ) 
+create table insp_value (insp_plan_id int not null ,insp_item_id int not null ,value tinyint not null ,remark varchar(1000) not null ,id int primary key auto_increment not null ,create_user_id int  ,update_user_id int  ,create_date date  ,update_date date  ) 
+====== / sql
