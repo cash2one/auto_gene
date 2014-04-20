@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>用户</title>
+    <title>{{{{title}}}}</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -39,23 +39,18 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>用户</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>{{{{sub_title}}}}</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
-                 
-<label>用户ID</label><input type='text' name='user_uid' id='user_uid' value='' >
-<label>编号</label><input type='text' name='user_code' id='user_code' value='' >
-<label>姓名</label><input type='text' name='user_name' id='user_name' value='' >
-<label>角色</label><input type='text' name='user_role' id='user_role' value='' >
-<label>部门</label><input type='text' name='user_dept' id='user_dept' value='' >
+                 {{{{filter_fields}}}}
                 <input type="submit" value="搜索" class="button">
              </form>
         </div>
 
         <div id="data_info">
             <div id="data_button">
-                <a href="/admin/user/add" class="button" >增加</a>
-                <a href="" class="button" >刷新</a>
+                <a href="{{{{url}}}}_edit/0" class="button" >增加</a>
+                <a href="javascript:location.reload();" class="button" >刷新</a>
             </div>
 
 			{% if not data.get('records') %}
@@ -63,20 +58,15 @@
 			{% else %}
             <div id="data_list">
                 <table border="1">
-                    <tr><th>序号</th><th>用户ID</th><th>编号</th><th>姓名</th><th>角色</th><th>部门</th><th>操作</th></tr>
+                    <tr><th>序号</th>{{{{field_names}}}}<th>操作</th></tr>
 
                     {% for item in data.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{item.get("uid")}}</td>
-<td>{{item.get("code")}}</td>
-<td>{{item.get("name")}}</td>
-<td>{{item.get("role")}}</td>
-<td>{{item.get("dept")}}</td>
-
+                            {{{{loop_fields}}}}
                             <td>
-                                <a href="/admin/user/edit/{{item.id}}" class="button small">编辑</a>
-                                <a href="/admin/user/delete/{{item.id}}" class="button small">删除</a>
+                                <a href="{{{{url}}}}_edit/{{item.id}}" class="button small">编辑</a>
+                                <a href="{{{{url}}}}_delete/{{item.id}}" class="button small" onclick="return confirm('确定删除?');">删除</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -98,3 +88,4 @@
 	</div>
 </body>
 </html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

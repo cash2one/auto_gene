@@ -23,8 +23,8 @@ class login:
     
     def POST (self):
         request = web.input()
-        user_id = request.get('user_id', '')
-        user_pw = request.get('user_pw', '')
+        user_id = request.get('user_id', '').strip()
+        user_pw = request.get('user_pw', '').strip()
         
         msg = ''
         if not user_id or not user_pw:
@@ -39,8 +39,9 @@ class login:
             return render ("admin/login.html", data = data)
         
         if user_id == 'admin' and user_pw == 'admin':
-            session.user_name = user_id
-            session.user_id = user_id
+            session.user_name = u'小明'
+            session.user_code = user_id
+            session.user_id = 1234
             session.admin   = True
             web.seeother("/admin/")
             

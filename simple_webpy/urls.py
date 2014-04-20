@@ -17,6 +17,7 @@ urls = (
         "/admin/login/?",   "controller.admin.login",
         "/admin/logout/?",  "controller.admin.logout",
         
+        
         "/admin/user_list",            "controller.admin.user.user_list",
         "/admin/user_read/(\d+)",      "controller.admin.user.user_read",
         "/admin/user_edit/(\d+)",      "controller.admin.user.user_edit",

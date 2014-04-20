@@ -130,8 +130,10 @@
 <script>
 	var g;
 	function show_menu (menu_id) {
+	    $("#main_page").attr('src','');
 		$("#menu_list div").hide();
 		$("#" + menu_id).show('slow');
+		
 	}
 	
 	function logout () {

@@ -1,0 +1,99 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>用户</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px margin:0px;}
+
+        table {
+            width:100%;
+            margin:0px auto;
+            text-align:center;
+            border-collapse:collapse;
+        }
+
+        table tr th {line-height:35px;}
+        table tr td {line-height:25px;}
+        table tr th,td {border:1px solid #BEA5F3;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+        .disabled {background-color:#D9EDF3;}
+
+        #data_button {height:30px; margin:3px;}
+        #data_list_next {margin-top:20px; margin-right:10px; float:right;}
+
+
+    </style>
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>用户管理</strong></div>
+        <div id="data_filter">
+             <form action="" method="get" accept-charset="utf-8">
+                 <label>编号</label>
+                 <input type="text" name="user_code">
+                 <label>姓名</label>
+                 <input type="text" name="user_code">
+                <input type="submit" value="搜索" class="button">
+             </form>
+        </div>
+
+        <div id="data_info">
+            <div id="data_button">
+                <a href="/admin/user/add" class="button" >增加</a>
+                <a href="" class="button" >刷新</a>
+            </div>
+
+            <div id="data_list">
+                <table border="1">
+                    <tr><th>序号</th><th>编号</th><th>姓名</th><th>地域</th><th>操作</th></tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td>001</td>
+                        <td>小明</td>
+                        <td>东部</td>
+                        <td><a href="/edit" class="button small">编辑</a><a href="/delete" class="button small">删除</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>002</td>
+                        <td>小强</td>
+                        <td>南部</td>
+                        <td><a href="/edit" class="button small">编辑</a><a href="/delete" class="button small">删除</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>003</td>
+                        <td>小华</td>
+                        <td>东部</td>
+                        <td><a href="/edit" class="button small">编辑</a><a href="/delete" class="button small">删除</a></td>
+                    </tr>
+
+                </table>
+
+                <div id="data_list_next">
+                    <a class="button small disabled">首页</a>
+                    <a href="" class="button small">上一页</a>
+                    <a >3</a>
+                    <a href="" class="button small">下一页</a>
+                    <a href="" class="button small">尾页</a>
+                    <a style="color:#A87858;">共14页</a>
+                </div>
+
+            </div>
+
+    </div>
+</body>
+</html>

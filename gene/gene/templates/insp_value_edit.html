@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>用户</title>
+    <title>巡查值</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -49,7 +49,7 @@
     </style>
     <script>
         function check () {
-            var fields = [ 'user_uid',  'user_code',  'user_name',  'user_role', ];
+            var fields = [ 'insp_value_insp_plan_id',  'insp_value_insp_item_id',  'insp_value_value',  'insp_value_remark',  'insp_value_id', ];
             for (var i=0; i<fields.length; i++) {
                 $("#" + fields[i] + "_msg").text("");
             }
@@ -71,24 +71,21 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>用户 增加</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查值 增加</strong></div>
         <div id="data_add">
             <form action="" method="post" accept-charset="utf-8" id="form1">
-                <input type='hidden' name='user_id' value='{{data.get('id') or ''}}' >
+                <input type='hidden' name='insp_value_id' value='{{data.get('id') or ''}}' >
 <div class="item_input">    
-		<span style='white-space:nowrap;'><label>用户ID:</label><input type='text' name='user_uid' id='user_uid' value='{{ data.get('uid') or '' }}' ></span>   <span id="user_uid_msg"></span>
+		<span style='white-space:nowrap;'><label>巡查计划:</label><input type='text' name='insp_value_insp_plan_id' id='insp_value_insp_plan_id' value='{{ data.get('insp_plan_id') or '' }}' ></span>   <span id="insp_value_insp_plan_id_msg"></span>
 </div>
 <div class="item_input">    
-		<span style='white-space:nowrap;'><label>编号:</label><input type='text' name='user_code' id='user_code' value='{{ data.get('code') or '' }}' ></span>   <span id="user_code_msg"></span>
+		<span style='white-space:nowrap;'><label>巡查项目:</label><input type='text' name='insp_value_insp_item_id' id='insp_value_insp_item_id' value='{{ data.get('insp_item_id') or '' }}' ></span>   <span id="insp_value_insp_item_id_msg"></span>
 </div>
 <div class="item_input">    
-		<span style='white-space:nowrap;'><label>姓名:</label><input type='text' name='user_name' id='user_name' value='{{ data.get('name') or '' }}' ></span>   <span id="user_name_msg"></span>
+		<span style='white-space:nowrap;'><label>巡查值（是否）:</label><input type='text' name='insp_value_value' id='insp_value_value' value='{{ data.get('value') or '' }}' ></span>   <span id="insp_value_value_msg"></span>
 </div>
 <div class="item_input">    
-		<span style='white-space:nowrap;'><label>角色:</label><input type='text' name='user_role' id='user_role' value='{{ data.get('role') or '' }}' ></span>   <span id="user_role_msg"></span>
-</div>
-<div class="item_input">    
-		<span style='white-space:nowrap;'><label>部门:</label><input type='text' name='user_dept' id='user_dept' value='{{ data.get('dept') or '' }}' ></span>   <span id="user_dept_msg"></span>
+		<span style='white-space:nowrap;'><label>巡查异常记录:</label><input type='text' name='insp_value_remark' id='insp_value_remark' value='{{ data.get('remark') or '' }}' ></span>   <span id="insp_value_remark_msg"></span>
 </div>
                 <div class="item_input">
                 	<label>&nbsp;</label>

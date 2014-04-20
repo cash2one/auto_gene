@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>巡查计划</title>
+    <title>巡查项目类型</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -39,22 +39,21 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查计划</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查项目类型</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
                  
-<label>巡查员</label><input type='text' name='insp_plan_user_id' id='insp_plan_user_id' value='' >
-<label>标题</label><input type='text' name='insp_plan_insp_date' id='insp_plan_insp_date' value='' >
-<label>部门</label><input type='text' name='insp_plan_dept_id' id='insp_plan_dept_id' value='' >
-<label>分店</label><input type='text' name='insp_plan_chain_id' id='insp_plan_chain_id' value='' >
+		<span style='white-space:nowrap;'><label>名字:</label><input type='text' name='insp_type_name' id='insp_type_name' value='{{ data.get('name') or '' }}' ></span>  
+		<span style='white-space:nowrap;'><label>顺序:</label><input type='text' name='insp_type_ord' id='insp_type_ord' value='{{ data.get('ord') or '' }}' ></span>  
+		<span style='white-space:nowrap;'><label>是否显示:</label><input type='text' name='insp_type_valid' id='insp_type_valid' value='{{ data.get('valid') or '' }}' ></span>  
                 <input type="submit" value="搜索" class="button">
              </form>
         </div>
 
         <div id="data_info">
             <div id="data_button">
-                <a href="/admin/insp_plan/add" class="button" >增加</a>
-                <a href="" class="button" >刷新</a>
+                <a href="/admin/insp_type_edit/0" class="button" >增加</a>
+                <a href="javascript:location.reload();" class="button" >刷新</a>
             </div>
 
 			{% if not data.get('records') %}
@@ -62,19 +61,18 @@
 			{% else %}
             <div id="data_list">
                 <table border="1">
-                    <tr><th>序号</th><th>巡查员</th><th>标题</th><th>部门</th><th>分店</th><th>操作</th></tr>
+                    <tr><th>序号</th><th>名字</th><th>顺序</th><th>是否显示</th><th>操作</th></tr>
 
                     {% for item in data.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{item.get("user_id")}}</td>
-<td>{{item.get("insp_date")}}</td>
-<td>{{item.get("dept_id")}}</td>
-<td>{{item.get("chain_id")}}</td>
+                            <td>{{item.get("name")}}</td>
+<td>{{item.get("ord")}}</td>
+<td>{{item.get("valid")}}</td>
 
                             <td>
-                                <a href="/admin/insp_plan/edit/{{item.id}}" class="button small">编辑</a>
-                                <a href="/admin/insp_plan/delete/{{item.id}}" class="button small">删除</a>
+                                <a href="/admin/insp_type_edit/{{item.id}}" class="button small">编辑</a>
+                                <a href="/admin/insp_type_delete/{{item.id}}" class="button small" onclick="return confirm('确定删除?');">删除</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -96,3 +94,4 @@
 	</div>
 </body>
 </html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

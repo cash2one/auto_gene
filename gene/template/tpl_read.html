@@ -2,9 +2,20 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>巡查计划</title>
+    <title>{{{{title}}}}</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
+        table {
+            width:100%;
+            margin:0px auto;
+            text-align:center;
+            border-collapse:collapse;
+        }
+
+        table tr th {line-height:35px;}
+        table tr td {line-height:25px; text-align:left;}
+        table tr th,td {border:1px solid #BEA5F3;}
+
 
         .button {
             background: #B7EAF7;
@@ -43,37 +54,27 @@
             line-height: 30px;
             vertical-align: middle;
         }
-
-
-
     </style>
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查计划 增加</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>{{{{sub_title}}}} 查看</strong></div>
         <div id="data_add">
-            <form action="" method="post" accept-charset="utf-8">
-                
-<div class="item_input">    
-<label>巡查员</label><input type='text' name='insp_plan_user_id' id='insp_plan_user_id' value='' > <span id="user_id_msg"></span>
-</div>
-<div class="item_input">    
-<label>标题</label><input type='text' name='insp_plan_insp_date' id='insp_plan_insp_date' value='' > <span id="insp_date_msg"></span>
-</div>
-<div class="item_input">    
-<label>部门</label><input type='text' name='insp_plan_dept_id' id='insp_plan_dept_id' value='' > <span id="dept_id_msg"></span>
-</div>
-<div class="item_input">    
-<label>分店</label><input type='text' name='insp_plan_chain_id' id='insp_plan_chain_id' value='' > <span id="chain_id_msg"></span>
-</div>
-                <div class="item_input">
-                	<label>&nbsp;</label>
-                	<input type="button" class="button" name="user_id" value="保存">
-                </div>
-
-             </form>
+            <table border="1">
+                {{{{all_fields}}}}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <input type="button" class="button" value="编辑" onclick="location.href='{{{{url}}}}_edit/{{data.get('id')}}';">
+                        <input type="button" class="button" value="删除" onclick="if confirm('确定删除？') { location.href='{{{{url}}}}_delete/{{data.get('id')}}'; }">
+                        <input type="button" class="button" value="返回" onclick="history.go(-1);">
+                    </td>
+                </tr>
+                	
+            </table>
         </div>
 
     </div>
 </body>
 </html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

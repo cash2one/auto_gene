@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>用户</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px; margin:0px;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+
+        .item_input {clear:both; clear: both; margin: 15px 0; }
+
+        .basic_input {
+            width: 200px;
+            padding: 5px;
+            height: 30px;
+            font-size: 14px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #c9c9c9;
+        }
+
+
+        label {
+            display: inline-block;
+            float: left;
+            margin-right: 15px;
+            text-align: right;
+            width: 60px;
+            font-size: 14px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>用户 查看</strong></div>
+        <div id="data_add">
+            <table>
+                
+		<tr><th>用户ID</th><td>{{data.get('uid') or '' }}</td></tr>
+		<tr><th>编号</th><td>{{data.get('code') or '' }}</td></tr>
+		<tr><th>姓名</th><td>{{data.get('name') or '' }}</td></tr>
+		<tr><th>角色</th><td>{{data.get('role') or '' }}</td></tr>
+		<tr><th>部门</th><td>{{data.get('dept') or '' }}</td></tr>
+		<tr><th>主键</th><td>{{data.get('id') or '' }}</td></tr>
+		<tr><th>创建用户</th><td>{{data.get('create_user_id') or '' }}</td></tr>
+		<tr><th>修改用户</th><td>{{data.get('update_user_id') or '' }}</td></tr>
+		<tr><th>创建时间</th><td>{{data.get('create_date') or '' }}</td></tr>
+		<tr><th>修改时间</th><td>{{data.get('update_date') or '' }}</td></tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <input type="button" class="button" value="编辑" onclick="location.href='/admin/user_edit/{{data.get('id')}}';">
+                        <input type="button" class="button" value="删除" onclick="if confirm('确定删除？') location.href='/admin/user_delete/{{data.get('id')}}';">
+                        <input type="button" class="button" value="返回" onclick="history.go(-1);">
+                    </td>
+                </tr>
+                	
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

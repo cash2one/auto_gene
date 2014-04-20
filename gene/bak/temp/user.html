@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>巡查值</title>
+    <title>用户</title>
     <style type="text/css" media="screen">
-        html,body {padding:0px; margin:0px;}
+        html,body {padding:0px margin:0px;}
 
         table {
             width:100%;
@@ -13,7 +12,7 @@
             border-collapse:collapse;
         }
 
-		table tr th {line-height:35px;}
+        table tr th {line-height:35px;}
         table tr td {line-height:25px;}
         table tr th,td {border:1px solid #BEA5F3;}
 
@@ -33,51 +32,52 @@
 
         #data_button {height:30px; margin:3px;}
         #data_list_next {margin-top:20px; margin-right:10px; float:right;}
-		#data_panel {}
+
 
     </style>
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查值</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>用户</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
                  
-<label>巡查计划</label><input type='text' name='insp_value_insp_plan_id' id='insp_value_insp_plan_id' value='' >
-<label>巡查项目</label><input type='text' name='insp_value_insp_item_id' id='insp_value_insp_item_id' value='' >
-<label>巡查值（是否）</label><input type='text' name='insp_value_value' id='insp_value_value' value='' >
-<label>巡查异常记录</label><input type='text' name='insp_value_remark' id='insp_value_remark' value='' >
+<label>用户ID</label><input type='text' name='user_uid' value='' >
+<label>编号</label><input type='text' name='user_code' value='' >
+<label>姓名</label><input type='text' name='user_name' value='' >
+<label>角色</label><input type='text' name='user_role' value='' >
+<label>区域</label><input type='text' name='user_area' value='' >
                 <input type="submit" value="搜索" class="button">
              </form>
         </div>
 
         <div id="data_info">
             <div id="data_button">
-                <a href="/admin/insp_value/add" class="button" >增加</a>
+                <a href="/admin/user/add" class="button" >增加</a>
                 <a href="" class="button" >刷新</a>
             </div>
 
-			{% if not data.get('records') %}
-				<div>当前没有数据</div>
-			{% else %}
             <div id="data_list">
                 <table border="1">
-                    <tr><th>序号</th><th>巡查计划</th><th>巡查项目</th><th>巡查值（是否）</th><th>巡查异常记录</th><th>操作</th></tr>
+                    <tr><th>序号</th><th>用户ID</th><th>编号</th><th>姓名</th><th>角色</th><th>区域</th><th>操作</th></tr>
 
-                    {% for item in data.get('records',[]) %}
+                    {% for item in data %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{item.get("insp_plan_id")}}</td>
-<td>{{item.get("insp_item_id")}}</td>
-<td>{{item.get("value")}}</td>
-<td>{{item.get("remark")}}</td>
+                            <td>{{item.get("uid")}}</td>
+<td>{{item.get("code")}}</td>
+<td>{{item.get("name")}}</td>
+<td>{{item.get("role")}}</td>
+<td>{{item.get("area")}}</td>
 
                             <td>
-                                <a href="/admin/insp_value/edit/{{item.id}}" class="button small">编辑</a>
-                                <a href="/admin/insp_value/delete/{{item.id}}" class="button small">删除</a>
+                                <a href="/admin/user/edit/{{item.id}}" class="button small">编辑</a>
+                                <a href="/admin/user/delete/{{item.id}}" class="button small">删除</a>
                             </td>
                         </tr>
                     {% endfor %}
+
+
                 </table>
 
                 <div id="data_list_next">
@@ -90,9 +90,7 @@
                 </div>
 
             </div>
-            {% endif %}
 
     </div>
-	</div>
 </body>
 </html>

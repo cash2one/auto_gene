@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>巡查项目类型</title>
+    <title>巡查值</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -39,21 +39,22 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查项目类型</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>巡查值</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
                  
-<label>名字</label><input type='text' name='insp_type_name' id='insp_type_name' value='' >
-<label>顺序</label><input type='text' name='insp_type_ord' id='insp_type_ord' value='' >
-<label>是否显示</label><input type='text' name='insp_type_valid' id='insp_type_valid' value='' >
+		<span style='white-space:nowrap;'><label>巡查计划:</label><input type='text' name='insp_value_insp_plan_id' id='insp_value_insp_plan_id' value='{{ data.get('insp_plan_id') or '' }}' ></span>  
+		<span style='white-space:nowrap;'><label>巡查项目:</label><input type='text' name='insp_value_insp_item_id' id='insp_value_insp_item_id' value='{{ data.get('insp_item_id') or '' }}' ></span>  
+		<span style='white-space:nowrap;'><label>巡查值（是否）:</label><input type='text' name='insp_value_value' id='insp_value_value' value='{{ data.get('value') or '' }}' ></span>  
+		<span style='white-space:nowrap;'><label>巡查异常记录:</label><input type='text' name='insp_value_remark' id='insp_value_remark' value='{{ data.get('remark') or '' }}' ></span>  
                 <input type="submit" value="搜索" class="button">
              </form>
         </div>
 
         <div id="data_info">
             <div id="data_button">
-                <a href="/admin/insp_type/add" class="button" >增加</a>
-                <a href="" class="button" >刷新</a>
+                <a href="/admin/insp_value_edit/0" class="button" >增加</a>
+                <a href="javascript:location.reload();" class="button" >刷新</a>
             </div>
 
 			{% if not data.get('records') %}
@@ -61,18 +62,19 @@
 			{% else %}
             <div id="data_list">
                 <table border="1">
-                    <tr><th>序号</th><th>名字</th><th>顺序</th><th>是否显示</th><th>操作</th></tr>
+                    <tr><th>序号</th><th>巡查计划</th><th>巡查项目</th><th>巡查值（是否）</th><th>巡查异常记录</th><th>操作</th></tr>
 
                     {% for item in data.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{item.get("name")}}</td>
-<td>{{item.get("ord")}}</td>
-<td>{{item.get("valid")}}</td>
+                            <td>{{item.get("insp_plan_id")}}</td>
+<td>{{item.get("insp_item_id")}}</td>
+<td>{{item.get("value")}}</td>
+<td>{{item.get("remark")}}</td>
 
                             <td>
-                                <a href="/admin/insp_type/edit/{{item.id}}" class="button small">编辑</a>
-                                <a href="/admin/insp_type/delete/{{item.id}}" class="button small">删除</a>
+                                <a href="/admin/insp_value_edit/{{item.id}}" class="button small">编辑</a>
+                                <a href="/admin/insp_value_delete/{{item.id}}" class="button small" onclick="return confirm('确定删除?');">删除</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -94,3 +96,4 @@
 	</div>
 </body>
 </html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

@@ -69,7 +69,11 @@ class user_list:
         data["user_name"] = session.user_name
         data["records"]   = data_list
         
-        return render ('admin/user_list.html', data=data)
+        info = {}
+        info['index']   = index
+        info['length']  = length
+        
+        return render ('admin/user_list.html', data=data, info=info)
 
 
 class user_read:
@@ -80,7 +84,8 @@ class user_read:
             print 'try to read an unauthrithm data, %s record id:%s , user id:%s'  %  ('user',xid, get_user())
             raise web.notfound()
         
-        data = m_user.get_one (**{"id": int(xid)})
+        data = {}
+        data['record'] = m_user.get_one ({"id",int(xid)})
         return render ('admin/user_read.html', data = data)
         
 

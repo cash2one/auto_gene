@@ -24,8 +24,12 @@ class DB :
         return db1.insert (self.TABLE, **info)
         
     def get_amount (self, **myvar):
-        tmp = self.get_many(0, 10000000000000, '', **myvar)
-        return tmp.__len__()
+        myvar, where = self._where(myvar)
+        sql = "select count(*) as amount from %s where %s" % (self.TABLE, where)
+        tmp = db1.query (sql, vars=myvar)
+        if tmp:
+            return tmp[0]['amount']
+        return 0
         
         
     def exists (self, **myvar):
@@ -67,7 +71,7 @@ class DB :
             print 'Delete Fail ,try to delete from %s without any filter condition'  % (self.TABLE)
             return None
         myvar,where = self._where (myvar)
-        temp = db1.delete (self.TABLE, where = where, vars = myvar, _test=True)
+        temp = db1.delete (self.TABLE, where = where, vars = myvar)
         return temp
     
     '''
@@ -87,7 +91,8 @@ class DB :
     
     def upsert (self,keyname, **myvar):
         #update or insert
-        if myvar[keyname] == 0:
+        print 'try to upsert record into database , key:%s,  data:%s' % (keyname, myvar)
+        if int(myvar.get(keyname) or 0) == 0:
             myvar.pop(keyname)
             return self.add (**myvar)
         else:

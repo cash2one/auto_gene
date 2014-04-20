@@ -27,4 +27,3 @@ class register:
 class find_password:
     def GET (self):
         pass
-		
