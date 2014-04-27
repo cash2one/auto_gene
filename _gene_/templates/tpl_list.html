@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>{{ item.title }}</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px; margin:0px;}
+
+        table {
+            width:100%;
+            margin:0px auto;
+            text-align:center;
+            border-collapse:collapse;
+        }
+
+		table tr th {line-height:35px;}
+        table tr td {line-height:25px;}
+        table tr th,td {border:1px solid #BEA5F3;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+        .disabled {background-color: white;}
+
+        #data_button {height:30px; margin:3px;}
+        #data_list_next {margin-top:20px; margin-right:10px; float:right;}
+		#data_panel {}
+
+    </style>
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>{{ item.title }}</strong></div>
+        <div id="data_filter">
+             <form action="" method="get" accept-charset="utf-8">
+                 {% for field in item.table.fields %}
+                    {% if field.display != 'n' %}
+                        <label>{{ field.title }}</label><input type="{{ field.show_type }}" name="{{item.name}}_{{field.field}}" value="#{item.filter.get('{{field.field}}') or '' }#">
+                     {% endif %}
+                  {% endfor %}
+                <input type="submit" value="搜索" class="button">
+             </form>
+        </div>
+
+        <div id="data_info">
+            <div id="data_button">
+                <a href="{{item.url}}_edit/0" class="button" >增加</a>
+                <a href="javascript:location.reload();" class="button" >刷新</a>
+            </div>
+
+			#% if not item.get('records') %#
+				<div>当前没有数据</div>
+			#% else %#
+            <div id="data_list">
+                <table border="1">
+                    <tr>
+                        <th>序号</th>
+                        {% for field in item.table.fields %}
+                            {% if field.display != 'n' %}
+                                <td>{{ field.title }}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <th>操作</th>
+                    </tr>
+
+                    #% for line in item.get('records',[]) %#
+                        <tr>
+                            <td>#{loop.index}#</td>
+                            {% for field in item.table.fields %}
+                                {% if field.display !='n' %}
+                                    <td>#{line.{{ field.field }} or '' }#</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>
+                                <a href="{{item.url}}_read/#{ line.id }#" class="button small">查看</a>
+                                <a href="{{item.url}}_edit/#{ line.id }#" class="button small">编辑</a>
+                                <a href="{{item.url}}_delete/#{ line.id }#" class="button small" onclick="return confirm('确定删除?');">删除</a>
+                            </td>
+                        </tr>
+                    #% endfor %#
+                </table>
+
+                #{ item.get ('next_page') or '' }#
+
+            </div>
+            #% endif %#
+
+    </div>
+	</div>
+</body>
+</html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

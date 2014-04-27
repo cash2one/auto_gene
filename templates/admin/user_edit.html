@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>用户</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px; margin:0px;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+
+        .item_input {clear:both; clear: both; margin: 15px 0; }
+
+        .basic_input {
+            width: 200px;
+            padding: 5px;
+            height: 30px;
+            font-size: 14px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #c9c9c9;
+        }
+
+
+        label {
+            display: inline-block;
+            float: left;
+            margin-right: 15px;
+            text-align: right;
+            width: 60px;
+            font-size: 14px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+
+
+    </style>
+    <script>
+        function check () {
+            var fields = [  
+                
+                'user_name',
+                
+                 
+                
+                'user_code',
+                
+                 
+                
+                'user_password',
+                
+                 
+                
+                 
+                
+                 
+                
+                'user_role',
+                
+                 ];
+            for (var i=0; i<fields.length; i++) {
+                $("#" + fields[i] + "_msg").text("");
+            }
+            
+            
+            for (var i=0; i<fields.length; i++) {
+                var tmp = $("#" + fields[i]);
+                if (tmp.val().trim().length == 0) {
+                    $("#" + fields[i] + "_msg").text("<<不能为空");
+                    tmp.focus();
+                    return false;
+                }
+            }
+            
+            $("#form1").submit();
+        }
+        
+    </script>
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/user_list">用户</a> 增加</strong></div>
+        <div id="data_add">
+            <form action="" method="post" accept-charset="utf-8" id="form1">
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>姓名</label>
+                    <input type="text" name="user_name" id="user_name" value="{{ data.get('record',{}).get('name') or '' }}">
+                    <span id="user_name_msg" ></span>
+                </div>
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>帐号</label>
+                    <input type="text" name="user_code" id="user_code" value="{{ data.get('record',{}).get('code') or '' }}">
+                    <span id="user_code_msg" ></span>
+                </div>
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>密码</label>
+                    <input type="text" name="user_password" id="user_password" value="{{ data.get('record',{}).get('password') or '' }}">
+                    <span id="user_password_msg" ></span>
+                </div>
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>性别</label>
+                    <input type="number" name="user_sex" id="user_sex" value="{{ data.get('record',{}).get('sex') or '' }}">
+                    <span id="user_sex_msg" ></span>
+                </div>
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>电话</label>
+                    <input type="text" name="user_tel" id="user_tel" value="{{ data.get('record',{}).get('tel') or '' }}">
+                    <span id="user_tel_msg" ></span>
+                </div>
+                
+                
+                
+                
+                <div class="item_input">
+                    <label>角色</label>
+                    <input type="number" name="user_role" id="user_role" value="{{ data.get('record',{}).get('role') or '' }}">
+                    <span id="user_role_msg" ></span>
+                </div>
+                
+                
+                <div class="item_input">
+                	<label>&nbsp;</label>
+                	<input type="button" class="button" value="保存" onclick="check();">
+                	&nbsp;&nbsp;
+                	<input type="button" class="button" value="返回" onclick="history.go(-1);">
+                </div>
+
+             </form>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

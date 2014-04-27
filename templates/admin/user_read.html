@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>用户</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px; margin:0px;}
+        table {
+            width:100%;
+            margin:0px auto;
+            text-align:center;
+            border-collapse:collapse;
+        }
+
+        table tr th {line-height:35px;}
+        table tr td {line-height:25px; text-align:left; padding-left:10px;}
+        table tr th,td {border:1px solid #BEA5F3;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+
+        .item_input {clear:both; clear: both; margin: 15px 0; }
+
+        .basic_input {
+            width: 200px;
+            padding: 5px;
+            height: 30px;
+            font-size: 14px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #c9c9c9;
+        }
+
+
+        label {
+            display: inline-block;
+            float: left;
+            margin-right: 15px;
+            text-align: right;
+            width: 60px;
+            font-size: 14px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/user_list">用户</a> 查看</strong></div>
+        <div id="data_add">
+            {% if data.get('record') %}
+            <table border="1">
+                
+                <tr>
+                    <td>姓名</td>
+                    <td>{{data.record.name or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>帐号</td>
+                    <td>{{data.record.code or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>密码</td>
+                    <td>{{data.record.password or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>性别</td>
+                    <td>{{data.record.sex or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>电话</td>
+                    <td>{{data.record.tel or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>角色</td>
+                    <td>{{data.record.role or '' }}</td>
+                </tr>
+                
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <input type="button" class="button" value="刷新" onclick="location.reload();" >
+                        <input type="button" class="button" value="编辑" onclick="location.href='/admin/user_edit/{{data.record.id}}';">
+                        <input type="button" class="button" value="删除" onclick="if (confirm('确定删除？')) { location.href='/admin/user_delete/{{data.record.id}}'; }">
+                        <input type="button" class="button" value="返回" onclick="history.go(-1);">
+                    </td>
+                </tr> 	
+            </table>
+            
+            {% else %}
+                <p>数据不存在</p>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

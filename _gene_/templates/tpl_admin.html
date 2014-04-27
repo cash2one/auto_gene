@@ -1,0 +1,107 @@
+
+<html>
+	<head>
+		<title>后台管理</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		
+		<style>
+			html,body {margin:0px; padding:0px;}
+			ul, ul li {margin:0px; padding:0px; list-style-type:none}
+			
+			body {width:960px; margin: 0 auto;}
+			
+			#header, #main, #footer {clear:both;}
+			
+			#header {height:50px; border-bottom:1px solid #A8A8EC; width:100%;}
+			#header_left  {float:left; height:100%; }
+			#header_right {float:right; height:100%; }
+			#header_right ul li {float:left; height:45px; line-height:45px; padding:2px 7px; display:block; cursor:pointer;}
+			#header_right ul li:hover {background:#E1F3F8;}
+			
+			#main {height:500px; border-top:15px solid #eee;}
+			#main_left, #main_right {float:left;}
+			#main_left {}
+			#main_right{width:770px;}
+			#main_left  {width:180px; border-right:1px solid #eee;}
+			#main_left ul li {height:30px; line-height:30px; padding: 2 0 2 10; display: block;}
+			#main_left ul li:hover {background:#f3f3f3;}
+			#main_left ul a {text-decoration:none;}
+			
+			
+			.hidden {display:none;}
+			
+		</style>
+	</head>
+	
+	<body id="layout" onload="">
+	  	<div id="header">
+			<div id="header_left">
+				<span style="font-size: 30px; line-height: 50px;">后台管理</span>
+			</div>
+			<div id="header_right">
+				<ul>
+				    {% for item in data %}
+					   <a href="javascript:show_menu('menu_{{ loop.index }}');"><li>{{ item.title }}</li></a>
+					{% endfor %}
+					   <a href="javascript:logout();"><li>退出</li></a>
+				</ul>
+			</div>
+		</div>
+		  
+		<div id="main">
+		  	<div id="main_left">
+		  		<div>
+		  			<span>#{ data.username or ' ' }#</span>
+		  		</div>
+		  		
+		  		<div id="menu_list">
+		  		    {% for item in data %}
+			  		<div id="menu_{{ loop.index }}" {% if loop.index!=1 %} class="hidden" {% endif %} >
+			  			<ul>
+			  				<a href="{{ item.url }}_list" target="main_page" >{{ item.title }}</a>
+			  			</ul>
+			  		</div>
+                    {% endfor %}			  		
+
+		  		</div> <!-- / menu list -->
+		  		
+		  	</div>
+		
+			<div id="main_right">
+				<iframe src="" id="main_page" style="border:0px; width:100%; height:100%;">
+				
+				</iframe>
+			</div>
+		
+		</div>
+		
+		<div id="footer">
+		  	<hr>
+		  	<div>&copy MM 2014</div>
+		  	<br/>
+		</div>
+	  
+	</body>
+</html>
+
+
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>
+
+<script>
+	var g;
+	function show_menu (menu_id) {
+	    $("#main_page").attr('src','');
+		$("#menu_list div").hide();
+		$("#" + menu_id).show('slow');
+		
+		$("#main_page").attr('src', $("#" + menu_id + " a").get(0).href );
+		
+	}
+	
+	function logout () {
+		if (confirm ("确认退出")) {
+			location.href = "/admin/logout";
+		}
+		
+	}
+</script>
