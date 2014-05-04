@@ -69,22 +69,22 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        {% for field in item.table.fields %}
-                            {% if field.display != 'n' %}
+                        {% for field in item.table.fields -%}
+                            {% if field.display != 'n' -%}
                                 <td>{{ field.title }}</td>
-                            {% endif %}
-                        {% endfor %}
+                            {% endif -%}
+                        {% endfor -%}
                         <th>操作</th>
                     </tr>
 
                     #% for line in item.get('records',[]) %#
                         <tr>
                             <td>#{loop.index}#</td>
-                            {% for field in item.table.fields %}
-                                {% if field.display !='n' %}
-                                    <td>#{line.{{ field.field }} or '' }#</td>
-                                {% endif %}
-                            {% endfor %}
+                            {% for field in item.table.fields -%}
+                                {% if field.display !='n' -%}
+                            <td>#{ (line.{{ field.field }} or '')|striptags|truncate(30)}#</td>
+                                {% endif -%}
+                            {% endfor -%}
                             <td>
                                 <a href="{{item.url}}_read/#{ line.id }#" class="button small">查看</a>
                                 <a href="{{item.url}}_edit/#{ line.id }#" class="button small">编辑</a>

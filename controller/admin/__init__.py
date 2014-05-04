@@ -49,3 +49,15 @@ class logout:
     def GET(self):
         session.kill()
         web.seeother ("/admin/login")
+        
+        
+class kindeditor_demo :
+    def GET (self):
+        return render ("admin/article_add.html")
+    def POST (self):
+        request = web.input()
+        
+        content = request.get('content')
+        data = {}
+        data['content'] = content
+        

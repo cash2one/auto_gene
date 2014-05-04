@@ -52,7 +52,7 @@
                      
                   
                     
-                        <label>出版商</label><input type="text" name="book_publisher" value="{{item.filter.get('publisher') or '' }}">
+                        <label>出版商</label><input type="number" name="book_publisher" value="{{item.filter.get('publisher') or '' }}">
                      
                   
                     
@@ -60,11 +60,11 @@
                      
                   
                     
-                        <label>作者</label><input type="text" name="book_author" value="{{item.filter.get('author') or '' }}">
+                        <label>作者</label><input type="number" name="book_author" value="{{item.filter.get('author') or '' }}">
                      
                   
                     
-                        <label>数量</label><input type="text" name="book_amount" value="{{item.filter.get('amount') or '' }}">
+                        <label>数量</label><input type="number" name="book_amount" value="{{item.filter.get('amount') or '' }}">
                      
                   
                     
@@ -97,79 +97,23 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        
-                            
-                                <td>书名</td>
-                            
-                        
-                            
-                                <td>出版商</td>
-                            
-                        
-                            
-                                <td>简介</td>
-                            
-                        
-                            
-                                <td>作者</td>
-                            
-                        
-                            
-                                <td>数量</td>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                        <th>操作</th>
+                        <td>书名</td>
+                            <td>出版商</td>
+                            <td>简介</td>
+                            <td>作者</td>
+                            <td>数量</td>
+                            <th>操作</th>
                     </tr>
 
                     {% for line in item.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            
-                                
-                                    <td>{{line.name or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.publisher or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.summary or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.author or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.amount or '' }}</td>
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            <td>
+                            <td>{{ (line.name or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.publisher or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.summary or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.author or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.amount or '')|striptags|truncate(30)}}</td>
+                                <td>
                                 <a href="/admin/book_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/book_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/book_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>

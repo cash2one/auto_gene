@@ -45,15 +45,20 @@
         }
 
         #data_panel {padding:10px;}
+        
+        form {
+            margin: 0;
+        }
+        textarea {
+            display: block;
+        }
 
     </style>
     <script>
         function check () {
-            var fields = [ {% for field in item.table.fields %} 
-                {% if field.null=='n' and field.display !='n' %}
-                '{{ item.name }}_{{ field.field }}',
-                {% endif %}
-                {% endfor %} ];
+            editor.sync();
+            
+            var fields = [ {% for field in item.table.fields -%} {% if field.null=='n' and field.display !='n' %}'{{ item.name }}_{{ field.field }}',{% endif %} {% endfor %} ];
             for (var i=0; i<fields.length; i++) {
                 $("#" + fields[i] + "_msg").text("");
             }
@@ -61,6 +66,11 @@
             
             for (var i=0; i<fields.length; i++) {
                 var tmp = $("#" + fields[i]);
+                
+                if (tmp.get(0).tagName=='TEXTAREA') {
+                    continue;
+                }
+                
                 if (tmp.val().trim().length == 0) {
                     $("#" + fields[i] + "_msg").text("<<不能为空");
                     tmp.focus();
@@ -72,6 +82,23 @@
         }
         
     </script>
+    
+    {% for field in item.table.fields -%}
+        {% if field.show_type=='textarea' %}
+        <link rel="stylesheet" href="/static/libs/kindeditor/themes/default/default.css" />
+        <script charset="utf-8" src="/static/libs/kindeditor/kindeditor-min.js"></script>
+        <script charset="utf-8" src="/static/libs/kindeditor/lang/zh_CN.js"></script>
+        <script>
+            var editor;
+            KindEditor.ready(function(K) {
+                editor = K.create('textarea[name="{{item.name}}_{{ field.field }}"]', {
+                    allowFileManager : true
+                });
+
+            });
+        </script>
+        {% endif %}
+    {% endfor %}
 </head>
 <body>
     <div id="data_panel">
@@ -79,22 +106,28 @@
         <div id="data_add">
             <form action="" method="post" accept-charset="utf-8" id="form1">
                 
-                {% for field in item.table.fields %}
+                {% for field in item.table.fields -%}
                 
-                {% if field.display != 'n' %}
+                {% if field.display != 'n' -%}
                 <div class="item_input">
                     <label>{{field.title}}</label>
-                    <input type="{{ field.show_type }}" name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" value="#{ data.get('record',{}).get('{{ field.field }}') or '' }#">
-                    <span id="{{item.name}}_{{ field.field }}_msg" ></span>
                     
-                    {% if field.FK %} 
+                    {% if field.show_type=='textarea' %} 
+                        <textarea name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" style="width:700px;height:400px;visibility:hidden;">#{ data.get('record',{}).get('{{ field.field }}') or '' }#</textarea> 
+                    {% else %}
+                    <input type="{{ field.show_type }}" name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" value="#{ data.get('record',{}).get('{{ field.field }}') or '' }#">
+                    {% endif %}
+                    
+                    <span id="{{item.name}}_{{ field.field }}_msg" > </span>
+                    {% if field.FK -%} 
                     <a class="button small" href="#" onclick="win=window.open('/admin/{{field.FK}}_list?show_confirm={{item.name}}_{{ field.field }}','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
                         查询
                     </a>
-                    {% endif %}
+                    {% endif -%}
                 </div>
-                {% endif %}
-                {% endfor %}
+                {% endif -%}
+                {% endfor -%}
+                
                 <div class="item_input">
                 	<label>&nbsp;</label>
                 	<input type="button" class="button" value="保存" onclick="check();">

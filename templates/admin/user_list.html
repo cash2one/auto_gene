@@ -60,7 +60,7 @@
                      
                   
                     
-                        <label>性别</label><input type="text" name="user_sex" value="{{item.filter.get('sex') or '' }}">
+                        <label>性别</label><input type="number" name="user_sex" value="{{item.filter.get('sex') or '' }}">
                      
                   
                     
@@ -68,7 +68,7 @@
                      
                   
                     
-                        <label>角色</label><input type="text" name="user_role" value="{{item.filter.get('role') or '' }}">
+                        <label>角色</label><input type="number" name="user_role" value="{{item.filter.get('role') or '' }}">
                      
                   
                     
@@ -101,87 +101,25 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        
-                            
-                                <td>姓名</td>
-                            
-                        
-                            
-                                <td>帐号</td>
-                            
-                        
-                            
-                                <td>密码</td>
-                            
-                        
-                            
-                                <td>性别</td>
-                            
-                        
-                            
-                                <td>电话</td>
-                            
-                        
-                            
-                                <td>角色</td>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                        <th>操作</th>
+                        <td>姓名</td>
+                            <td>帐号</td>
+                            <td>密码</td>
+                            <td>性别</td>
+                            <td>电话</td>
+                            <td>角色</td>
+                            <th>操作</th>
                     </tr>
 
                     {% for line in item.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            
-                                
-                                    <td>{{line.name or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.code or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.password or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.sex or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.tel or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.role or '' }}</td>
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            <td>
+                            <td>{{ (line.name or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.code or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.password or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.sex or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.tel or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.role or '')|striptags|truncate(30)}}</td>
+                                <td>
                                 <a href="/admin/user_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/user_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/user_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>

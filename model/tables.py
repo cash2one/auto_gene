@@ -32,6 +32,10 @@ class Book_publisher (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
+class Article (DB):
+    def __init__ (self, table_name):
+        DB.__init__(self, table_name)
+
         
 
 
@@ -48,6 +52,8 @@ user_book = User_book('user_book')
 book_author = Book_author('book_author')
 
 book_publisher = Book_publisher('book_publisher')
+
+article = Article('article')
 
 
 

@@ -36,6 +36,14 @@ urls = (
 "/admin/author_delete/(\d+)",    "controller.admin.author.author_delete",
 #--------------end author -------
 
+#--------------article -----------
+#----文章管理----
+"/admin/article_list",            "controller.admin.article.article_list",
+"/admin/article_read/(\d+)",      "controller.admin.article.article_read",
+"/admin/article_edit/(\d+)",      "controller.admin.article.article_edit",
+"/admin/article_delete/(\d+)",    "controller.admin.article.article_delete",
+#--------------end article -------
+
 
 
 )

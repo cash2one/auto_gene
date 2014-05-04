@@ -89,63 +89,19 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        
-                            
-                                <td>姓名</td>
-                            
-                        
-                            
-                                <td>出生</td>
-                            
-                        
-                            
-                                <td>简介</td>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                        <th>操作</th>
+                        <td>姓名</td>
+                            <td>出生</td>
+                            <td>简介</td>
+                            <th>操作</th>
                     </tr>
 
                     {% for line in item.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            
-                                
-                                    <td>{{line.name or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.birth or '' }}</td>
-                                
-                            
-                                
-                                    <td>{{line.description or '' }}</td>
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                                
-                            
-                            <td>
+                            <td>{{ (line.name or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.birth or '')|striptags|truncate(30)}}</td>
+                                <td>{{ (line.description or '')|striptags|truncate(30)}}</td>
+                                <td>
                                 <a href="/admin/author_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/author_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/author_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>

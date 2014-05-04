@@ -45,31 +45,20 @@
         }
 
         #data_panel {padding:10px;}
+        
+        form {
+            margin: 0;
+        }
+        textarea {
+            display: block;
+        }
 
     </style>
     <script>
         function check () {
-            var fields = [  
-                
-                'author_name',
-                
-                 
-                
-                 
-                
-                 
-                
-                 
-                
-                 
-                
-                 
-                
-                 
-                
-                 
-                
-                 ];
+            editor.sync();
+            
+            var fields = [ 'author_name',          ];
             for (var i=0; i<fields.length; i++) {
                 $("#" + fields[i] + "_msg").text("");
             }
@@ -77,6 +66,11 @@
             
             for (var i=0; i<fields.length; i++) {
                 var tmp = $("#" + fields[i]);
+                
+                if (tmp.get(0).tagName=='TEXTAREA') {
+                    continue;
+                }
+                
                 if (tmp.val().trim().length == 0) {
                     $("#" + fields[i] + "_msg").text("<<不能为空");
                     tmp.focus();
@@ -88,6 +82,17 @@
         }
         
     </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </head>
 <body>
     <div id="data_panel">
@@ -95,58 +100,33 @@
         <div id="data_add">
             <form action="" method="post" accept-charset="utf-8" id="form1">
                 
-                
-                
-                
                 <div class="item_input">
                     <label>姓名</label>
+                    
+                    
                     <input type="text" name="author_name" id="author_name" value="{{ data.get('record',{}).get('name') or '' }}">
-                    <span id="author_name_msg" ></span>
                     
                     
-                </div>
-                
-                
-                
-                
+                    <span id="author_name_msg" > </span>
+                    </div>
                 <div class="item_input">
                     <label>出生</label>
+                    
+                    
                     <input type="date" name="author_birth" id="author_birth" value="{{ data.get('record',{}).get('birth') or '' }}">
-                    <span id="author_birth_msg" ></span>
                     
                     
-                </div>
-                
-                
-                
-                
+                    <span id="author_birth_msg" > </span>
+                    </div>
                 <div class="item_input">
                     <label>简介</label>
+                    
+                    
                     <input type="text" name="author_description" id="author_description" value="{{ data.get('record',{}).get('description') or '' }}">
-                    <span id="author_description_msg" ></span>
                     
                     
-                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                    <span id="author_description_msg" > </span>
+                    </div>
                 <div class="item_input">
                 	<label>&nbsp;</label>
                 	<input type="button" class="button" value="保存" onclick="check();">

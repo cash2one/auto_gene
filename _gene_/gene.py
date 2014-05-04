@@ -163,8 +163,11 @@ def fields (data, default_fields):
         for field in table['fields']:
             if field['type'] in ['datetime','date']:
                 field['show_type'] = 'date'
-            elif line['type'] in ['tinyint','int','integer']:
+            elif field['type'] in ['tinyint','int','integer']:
                 field['show_type'] = 'number'
+            elif field['type'] in ['text', 'mediumtext', 'longtext']:
+                print field
+                field['show_type'] = 'textarea'
             else:
                 field['show_type'] = 'text'
                 
