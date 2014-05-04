@@ -31,6 +31,7 @@
         .small {padding: 3px 8px; font-size:13px;}
         .disabled {background-color: white;}
 
+        #data_panel {padding:10px;}
         #data_button {height:30px; margin:3px;}
         #data_list_next {margin-top:20px; margin-right:10px; float:right;}
 		#data_panel {}
@@ -42,6 +43,9 @@
         <div id="data_sub_title" style="margin:10px 2px;"><strong>作者</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
+                 {% if item.get('show_confirm') %}
+                    <input type="hidden" name="show_confirm" value="{{ item.get('show_confirm') }}" >
+                 {% endif %}
                  
                     
                         <label>姓名</label><input type="text" name="author_name" value="{{item.filter.get('name') or '' }}">
@@ -55,6 +59,18 @@
                         <label>简介</label><input type="text" name="author_description" value="{{item.filter.get('description') or '' }}">
                      
                   
+                    
+                  
+                    
+                  
+                    
+                  
+                    
+                  
+                    
+                  
+                    
+                  
                 <input type="submit" value="搜索" class="button">
              </form>
         </div>
@@ -63,6 +79,7 @@
             <div id="data_button">
                 <a href="/admin/author_edit/0" class="button" >增加</a>
                 <a href="javascript:location.reload();" class="button" >刷新</a>
+                <a href="javascript:window.open(location.href+ (location.search? location.search:'?')+ '&__format=xls','_blank');"  class="button" >导出</a>
             </div>
 
 			{% if not item.get('records') %}
@@ -85,6 +102,18 @@
                                 <td>简介</td>
                             
                         
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
                         <th>操作</th>
                     </tr>
 
@@ -104,10 +133,27 @@
                                     <td>{{line.description or '' }}</td>
                                 
                             
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
                             <td>
                                 <a href="/admin/author_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/author_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/author_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>
+                                {% if item.get('show_confirm') %}
+                                <a href="javascript: window.opener.document.getElementById('{{item.get('show_confirm')}}').value={{ line.id }}; window.close();" class="button small">
+                                    确定
+                                </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

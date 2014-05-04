@@ -8,15 +8,15 @@ class User (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
-class Book (DB):
-    def __init__ (self, table_name):
-        DB.__init__(self, table_name)
-
 class Author (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
 class Publisher (DB):
+    def __init__ (self, table_name):
+        DB.__init__(self, table_name)
+
+class Book (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
@@ -37,11 +37,11 @@ class Book_publisher (DB):
 
 user = User('user')
 
-book = Book('book')
-
 author = Author('author')
 
 publisher = Publisher('publisher')
+
+book = Book('book')
 
 user_book = User_book('user_book')
 

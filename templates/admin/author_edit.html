@@ -44,7 +44,7 @@
             vertical-align: middle;
         }
 
-
+        #data_panel {padding:10px;}
 
     </style>
     <script>
@@ -52,6 +52,18 @@
             var fields = [  
                 
                 'author_name',
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
                 
                  
                 
@@ -90,6 +102,8 @@
                     <label>姓名</label>
                     <input type="text" name="author_name" id="author_name" value="{{ data.get('record',{}).get('name') or '' }}">
                     <span id="author_name_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -99,6 +113,8 @@
                     <label>出生</label>
                     <input type="date" name="author_birth" id="author_birth" value="{{ data.get('record',{}).get('birth') or '' }}">
                     <span id="author_birth_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -108,7 +124,27 @@
                     <label>简介</label>
                     <input type="text" name="author_description" id="author_description" value="{{ data.get('record',{}).get('description') or '' }}">
                     <span id="author_description_msg" ></span>
+                    
+                    
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 <div class="item_input">

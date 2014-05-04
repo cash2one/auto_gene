@@ -53,6 +53,8 @@
             line-height: 30px;
             vertical-align: middle;
         }
+        
+        #data_panel {padding:10px;}
     </style>
 </head>
 <body>
@@ -64,7 +66,7 @@
                 {% for field in item.table.fields %}
                 <tr>
                     <td>{{field.title}}</td>
-                    <td>#{data.record.{{field.field}} or '' }#</td>
+                    <td>{% if field.FK %} <a href="/admin/{{field.FK}}_read/#{data.record.{{field.field}}}#">#{data.record.{{field.field}} or '' }# </a> {% else %}#{data.record.{{field.field}} or '' }# {% endif %}</td>
                 </tr>
                 {% endfor %}
                 <tr>

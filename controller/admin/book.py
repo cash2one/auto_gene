@@ -5,7 +5,7 @@ import web
 
 from model.tables import book as m_book
 from lib.utils import render, user_login, admin_login, next_page
-
+from lib import utils
 session = web.config._session
 
 '''
@@ -38,7 +38,7 @@ class book_list:
         index  = int(index)
         length = int(length)
         
-        fields = [  'book_name',  'book_publisher',  'book_summary',  'book_author',  'book_amount',  ]
+        fields = [  'book_name',  'book_publisher',  'book_summary',  'book_author',  'book_amount',  'book_id',  'book_create_time',  'book_create_user',  'book_update_time',  'book_update_user',  'book_valid',  ]
         cond = {}
         data = {}
         data['filter'] = {}
@@ -48,12 +48,20 @@ class book_list:
                 data['filter'][new_field] = request.get(field).strip()
                 cond[new_field] = request.get(field).strip()
         
+        if request.get('__format','') == 'xls':
+            data_list = m_book.get_many (0, 10000000000, 'id desc', **cond)
+            filename = u'%s.xls' % '书籍'
+            fields   = {}
+            fields['key'] = [  'name',  'publisher',  'summary',  'author',  'amount',  'id',  'create_time',  'create_user',  'update_time',  'update_user',  'valid',  ]
+            fields['title'] = [ u'序号',  u'书名',  u'出版商',  u'简介',  u'作者',  u'数量',  u'ID',  u'创建时间',  u'创建用户',  u'最后修改时间',  u'最后修改用户',  u'状态',  ]
+            return utils.output_excel (filename, fields, data_list)
+        
         data_list = m_book.get_many (index, length, 'id desc', **cond)
         data_len  = m_book.get_amount (**cond)
         
         data["records"]   = data_list
         data['next_page'] = next_page (index, length, data_len)
-        
+        data['show_confirm'] = web.input().get('show_confirm','')
         return render ('admin/book_list.html', item=data)
 
 
@@ -101,8 +109,8 @@ class book_edit:
         xid  = int(xid)
         
         request = web.input()
-        input_fields = [  'book_name',  'book_publisher',  'book_summary',  'book_author',  'book_amount',  ]
-        nonul_fields = [   'book_name',    'book_publisher',        'book_amount',   ]   #user input fileds, can not be emtpy
+        input_fields = [   'book_name',    'book_publisher',    'book_summary',    'book_author',    'book_amount',               ]
+        nonul_fields = [   'book_name',    'book_publisher',        'book_amount',               ]   #user input fileds, can not be emtpy
         
         #检查用户是否有权限
         if xid!=0 and not check_right (xid):
@@ -111,23 +119,22 @@ class book_edit:
         
         #检查是否存在 不能为空的字段 输入为空
         if not self.check_input (request, nonul_fields):
-            print 'try to edit data, but found some not-null parameter null'
+            print 'try to edit data, but found some not-null parameter null, table: %s'  % 'book'
             return default_error('some parameter empty')
         
         data = {}
+        
         if xid==0:   #new record
             print 'add new record into database for table book'
             data["id"] = 0
-            data['create_time'] = get_date()
-            data['create_user'] = get_user()
+            data['create_time'] = get_date(); data['create_user'] = get_user()
         else:
             print 'update record into database for table book'
             data = m_book.get_one ( ** {'id': xid})
             if not data:
                 print 'try to update record into database, but fail'
                 raise web.notfound()
-            data['update_time'] = get_date()
-            data['update_user'] = get_user()
+            data['update_time'] = get_date(); data['update_user'] = get_user()
         for field in input_fields:
             new_field = field.replace('book_','',1)
             data[new_field] = request.get(field,'')

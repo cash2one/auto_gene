@@ -53,6 +53,8 @@
             line-height: 30px;
             vertical-align: middle;
         }
+        
+        #data_panel {padding:10px;}
     </style>
 </head>
 <body>
@@ -64,27 +66,57 @@
                 
                 <tr>
                     <td>书名</td>
-                    <td>{{data.record.name or '' }}</td>
+                    <td>{{data.record.name or '' }} </td>
                 </tr>
                 
                 <tr>
                     <td>出版商</td>
-                    <td>{{data.record.publisher or '' }}</td>
+                    <td> <a href="/admin/publisher_read/{{data.record.publisher}}">{{data.record.publisher or '' }} </a> </td>
                 </tr>
                 
                 <tr>
                     <td>简介</td>
-                    <td>{{data.record.summary or '' }}</td>
+                    <td>{{data.record.summary or '' }} </td>
                 </tr>
                 
                 <tr>
                     <td>作者</td>
-                    <td>{{data.record.author or '' }}</td>
+                    <td> <a href="/admin/author_read/{{data.record.author}}">{{data.record.author or '' }} </a> </td>
                 </tr>
                 
                 <tr>
                     <td>数量</td>
-                    <td>{{data.record.amount or '' }}</td>
+                    <td>{{data.record.amount or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>ID</td>
+                    <td>{{data.record.id or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>创建时间</td>
+                    <td>{{data.record.create_time or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>创建用户</td>
+                    <td>{{data.record.create_user or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>最后修改时间</td>
+                    <td>{{data.record.update_time or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>最后修改用户</td>
+                    <td>{{data.record.update_user or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>{{data.record.valid or '' }} </td>
                 </tr>
                 
                 <tr>

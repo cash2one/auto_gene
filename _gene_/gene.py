@@ -72,29 +72,16 @@ def excel_to_list (filename, sheets=[], skip_header=1, header_as_key=False):
              result.append ( sheet_to_table (data.sheet_by_name(sheet)) )
     return result
     
-def gene_sql (data, default_fields):
+def gene_sql (tables):
     '''
     generate the create table sql 
     '''
-    tables = []
-    for line in data:
-        tmp = line.pop('table_name').strip()
-        if not tmp or tmp.startswith('#'):
-            continue
-        
-        for table in tables:
-            if tmp == table.get('name'):
-                table['fields'].append (line)
-                break
-        else:
-            #this else will run if not trigger "break"
-            tables.append ( {'name':tmp, 'fields':[line,]} )
     
     for table in tables:
         sql = 'create table %s ('  %  table['name']
         tmp = []
         fk  = []
-        for field in (default_fields + table['fields']):
+        for field in (table['fields']):
             line = ' %s %s %s %s'   % (field.get('field'), field.get('type'),  \
                                        ('null' if field.get('null')=='y' else 'not null' ),  \
                                        ('' if not field.get('default') else 'default '+ field.get('default'))) 
@@ -105,12 +92,11 @@ def gene_sql (data, default_fields):
             if field.get('FK'):
                 fk.append (' foreign key(%s) REFERENCES %s(id)' % (field.get('field'), field.get('FK')))
             tmp.append (line)
-        sql += ','.join(fk+tmp) + ' ); '
+        sql += ','.join(fk+tmp) + ' ) default character set utf8;  '
         print sql
         
     print '-----end sql ----'
     print '-----------------'
-    return tables
     
 def gene_url (data):
     
@@ -118,10 +104,10 @@ def gene_url (data):
     for item in data:
         content += '#--------------%s -----------\n'  % item['name']
         content += '#----%s----\n'  % item['remark']
-        content += '"%s_list",            "controller.admin.%s.%s_list",\n' % (item['url'], item['name'], item['name'])
-        content += '"%s_read/(\d+)",      "controller.admin.%s.%s_read",\n' % (item['url'], item['name'], item['name'])
-        content += '"%s_edit/(\d+)",      "controller.admin.%s.%s_edit",\n' % (item['url'], item['name'], item['name'])
-        content += '"%s_delete/(\d+)",    "controller.admin.%s.%s_delete",\n' % (item['url'], item['name'], item['name'])
+        content += '"/admin/%s_list",            "controller.admin.%s.%s_list",\n'   % (item['name'], item['name'], item['name'])
+        content += '"/admin/%s_read/(\d+)",      "controller.admin.%s.%s_read",\n'   % (item['name'], item['name'], item['name'])
+        content += '"/admin/%s_edit/(\d+)",      "controller.admin.%s.%s_edit",\n'   % (item['name'], item['name'], item['name'])
+        content += '"/admin/%s_delete/(\d+)",    "controller.admin.%s.%s_delete",\n' % (item['name'], item['name'], item['name'])
         content += '#--------------end %s -------\n\n'  % item['name']
     
     content = render ('urls.py', admin_url=content)
@@ -153,34 +139,52 @@ def gene_admin_index (data):
     content = render ('tpl_admin.html', data=data)
     write_file ('../templates/admin/admin.html', replace_template(content))
   
-def show_type (data):
+
+
+def fields (data, default_fields):
+    tables = []
     for line in data:
-        if line['type'] in ['datetime','date']:
-            line['show_type'] = 'date'
-        elif line['type'] in ['tinyint','int','integer']:
-            line['show_type'] = 'number'
-        else:
-            line['show_type'] = 'text'
-    return data
-   
-def merge_page_table (page, table):
-    for item in page:
+        tmp = line.pop('table_name').strip()
+        if not tmp or tmp.startswith('#'):
+            continue
+        
         for table in tables:
-            if table['name'] == item['table_name']:
-                item['table'] = table
+            if tmp == table.get('name'):
+                table['fields'].append (line)
                 break
         else:
-            raise Exception ("Not found table %s" % item['table_name'])
+            #this else will run if not trigger "break"
+            tables.append ( {'name':tmp, 'fields':[line,]} )
         
-    return page
+    for table in tables:
+        table['fields'].extend (default_fields)
+        
+    for table in tables:
+        for field in table['fields']:
+            if field['type'] in ['datetime','date']:
+                field['show_type'] = 'date'
+            elif line['type'] in ['tinyint','int','integer']:
+                field['show_type'] = 'number'
+            else:
+                field['show_type'] = 'text'
+                
+    return tables
         
 if __name__ == "__main__":
     page, table, default_field = excel_to_list ("./templates/schema.xlsx", ['admin', 'table', 'default_fields'], 1, True)
-    tables = gene_sql (table, default_field)
+    tables = fields (table, default_field)   #{'name': 'user', 'fields': ['field': 'name', 'type':'int',...]}
+    gene_sql (tables)
     gene_model (tables)
-    table = show_type (table)
     
-    page = merge_page_table (page, table)
+    for item in page:
+        item['url'] = '/admin/%s'  % item['name']
+        for table in tables:
+            if table['name'] == item['name']:
+                item['table'] = table
+                break
+        else:
+            raise ("not found defination of table %s" % item['name'] )
+    
     for item in page:
         gene_view (item)
         gene_read (item)

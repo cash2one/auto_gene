@@ -3,9 +3,9 @@ import datetime
 
 import web
 
-from model.tables import {{item.table_name}} as m_{{item.name}}
+from model.tables import {{item.name}} as m_{{item.name}}
 from lib.utils import render, user_login, admin_login, next_page
-
+from lib import utils
 session = web.config._session
 
 '''
@@ -48,12 +48,20 @@ class {{item.name}}_list:
                 data['filter'][new_field] = request.get(field).strip()
                 cond[new_field] = request.get(field).strip()
         
+        if request.get('__format','') == 'xls':
+            data_list = m_{{item.name}}.get_many (0, 10000000000, 'id desc', **cond)
+            filename = u'%s.xls' % '{{item.title}}'
+            fields   = {}
+            fields['key'] = [ {% for line in item.table.fields %} '{{ line.field }}', {% endfor %} ]
+            fields['title'] = [ u'序号', {% for line in item.table.fields %} u'{{ line.title }}', {% endfor %} ]
+            return utils.output_excel (filename, fields, data_list)
+        
         data_list = m_{{item.name}}.get_many (index, length, 'id desc', **cond)
         data_len  = m_{{item.name}}.get_amount (**cond)
         
         data["records"]   = data_list
         data['next_page'] = next_page (index, length, data_len)
-        
+        data['show_confirm'] = web.input().get('show_confirm','')
         return render ('admin/{{item.name}}_list.html', item=data)
 
 
@@ -101,8 +109,8 @@ class {{item.name}}_edit:
         xid  = int(xid)
         
         request = web.input()
-        input_fields = [ {% for line in item.table.fields %} '{{item.name}}_{{line.field}}', {% endfor %} ]
-        nonul_fields = [ {% for line in item.table.fields %} {% if line.null=='n' %} '{{item.name}}_{{line.field}}', {% endif %} {% endfor %} ]   #user input fileds, can not be emtpy
+        input_fields = [ {% for line in item.table.fields %} {% if line.display!='n' %} '{{item.name}}_{{line.field}}', {% endif %} {% endfor %} ]
+        nonul_fields = [ {% for line in item.table.fields %} {% if line.null=='n' and line.display!='n' %} '{{item.name}}_{{line.field}}', {% endif %} {% endfor %} ]   #user input fileds, can not be emtpy
         
         #检查用户是否有权限
         if xid!=0 and not check_right (xid):
@@ -111,23 +119,22 @@ class {{item.name}}_edit:
         
         #检查是否存在 不能为空的字段 输入为空
         if not self.check_input (request, nonul_fields):
-            print 'try to edit data, but found some not-null parameter null'
+            print 'try to edit data, but found some not-null parameter null, table: %s'  % '{{item.name}}'
             return default_error('some parameter empty')
         
         data = {}
+        
         if xid==0:   #new record
             print 'add new record into database for table {{item.name}}'
             data["id"] = 0
-            data['create_time'] = get_date()
-            data['create_user'] = get_user()
+            {% for line in item.table.fields %}{% if line.field == 'create_time' %}data['create_time'] = get_date(); {% endif %}{% if line.field == 'create_user' %}data['create_user'] = get_user(){% endif %}{% endfor %}
         else:
             print 'update record into database for table {{item.name}}'
             data = m_{{item.name}}.get_one ( ** {'id': xid})
             if not data:
                 print 'try to update record into database, but fail'
                 raise web.notfound()
-            data['update_time'] = get_date()
-            data['update_user'] = get_user()
+            {% for line in item.table.fields %}{% if line.field == 'update_time' %}data['update_time'] = get_date(); {% endif %}{% if line.field == 'update_user' %}data['update_user'] = get_user(){% endif %}{% endfor %}
         for field in input_fields:
             new_field = field.replace('{{item.name}}_','',1)
             data[new_field] = request.get(field,'')

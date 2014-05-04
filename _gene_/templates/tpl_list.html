@@ -31,6 +31,7 @@
         .small {padding: 3px 8px; font-size:13px;}
         .disabled {background-color: white;}
 
+        #data_panel {padding:10px;}
         #data_button {height:30px; margin:3px;}
         #data_list_next {margin-top:20px; margin-right:10px; float:right;}
 		#data_panel {}
@@ -42,6 +43,9 @@
         <div id="data_sub_title" style="margin:10px 2px;"><strong>{{ item.title }}</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
+                 #% if item.get('show_confirm') %#
+                    <input type="hidden" name="show_confirm" value="#{ item.get('show_confirm') }#" >
+                 #% endif %#
                  {% for field in item.table.fields %}
                     {% if field.display != 'n' %}
                         <label>{{ field.title }}</label><input type="{{ field.show_type }}" name="{{item.name}}_{{field.field}}" value="#{item.filter.get('{{field.field}}') or '' }#">
@@ -55,6 +59,7 @@
             <div id="data_button">
                 <a href="{{item.url}}_edit/0" class="button" >增加</a>
                 <a href="javascript:location.reload();" class="button" >刷新</a>
+                <a href="javascript:window.open(location.href+ (location.search? location.search:'?')+ '&__format=xls','_blank');"  class="button" >导出</a>
             </div>
 
 			#% if not item.get('records') %#
@@ -84,6 +89,11 @@
                                 <a href="{{item.url}}_read/#{ line.id }#" class="button small">查看</a>
                                 <a href="{{item.url}}_edit/#{ line.id }#" class="button small">编辑</a>
                                 <a href="{{item.url}}_delete/#{ line.id }#" class="button small" onclick="return confirm('确定删除?');">删除</a>
+                                #% if item.get('show_confirm') %#
+                                <a href="javascript: window.opener.document.getElementById('#{item.get('show_confirm')}#').value=#{ line.id }#; window.close();" class="button small">
+                                    确定
+                                </a>
+                                #% endif %#
                             </td>
                         </tr>
                     #% endfor %#

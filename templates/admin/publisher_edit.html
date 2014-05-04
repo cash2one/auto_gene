@@ -44,7 +44,7 @@
             vertical-align: middle;
         }
 
-
+        #data_panel {padding:10px;}
 
     </style>
     <script>
@@ -60,6 +60,18 @@
                  
                 
                 'publisher_tel',
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
                 
                  ];
             for (var i=0; i<fields.length; i++) {
@@ -83,7 +95,7 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/public_list">出版商</a> 增加</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/publisher_list">出版商</a> 增加</strong></div>
         <div id="data_add">
             <form action="" method="post" accept-charset="utf-8" id="form1">
                 
@@ -94,6 +106,8 @@
                     <label>出版商</label>
                     <input type="text" name="publisher_name" id="publisher_name" value="{{ data.get('record',{}).get('name') or '' }}">
                     <span id="publisher_name_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -103,6 +117,8 @@
                     <label>地址</label>
                     <input type="text" name="publisher_address" id="publisher_address" value="{{ data.get('record',{}).get('address') or '' }}">
                     <span id="publisher_address_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -112,7 +128,27 @@
                     <label>电话</label>
                     <input type="text" name="publisher_tel" id="publisher_tel" value="{{ data.get('record',{}).get('tel') or '' }}">
                     <span id="publisher_tel_msg" ></span>
+                    
+                    
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 <div class="item_input">

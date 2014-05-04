@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import web
 
 from etc.conf import db
-db1 = web.database(dbn= db['type'], db= db['name'], user=db['user'], pw=db['pawd'])
+db1 = web.database(dbn= db['type'], db= db['name'], user=db['user'], pw=db['pawd'], host=db['host'], port=db['port'])
 
 
 class DB :

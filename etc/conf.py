@@ -3,8 +3,8 @@
 
 db = {
       'type': 'mysql',
-      'host': 'localhost',
-      'port': 5432,
+      'host': '127.0.0.1',
+      'port': 3306,
       'user': 'root',
       'pawd': '1234',
       'name': 'auto',

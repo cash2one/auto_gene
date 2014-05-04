@@ -5,7 +5,7 @@ import web
 
 from model.tables import author as m_author
 from lib.utils import render, user_login, admin_login, next_page
-
+from lib import utils
 session = web.config._session
 
 '''
@@ -38,7 +38,7 @@ class author_list:
         index  = int(index)
         length = int(length)
         
-        fields = [  'author_name',  'author_birth',  'author_description',  ]
+        fields = [  'author_name',  'author_birth',  'author_description',  'author_id',  'author_create_time',  'author_create_user',  'author_update_time',  'author_update_user',  'author_valid',  ]
         cond = {}
         data = {}
         data['filter'] = {}
@@ -48,12 +48,20 @@ class author_list:
                 data['filter'][new_field] = request.get(field).strip()
                 cond[new_field] = request.get(field).strip()
         
+        if request.get('__format','') == 'xls':
+            data_list = m_author.get_many (0, 10000000000, 'id desc', **cond)
+            filename = u'%s.xls' % '作者'
+            fields   = {}
+            fields['key'] = [  'name',  'birth',  'description',  'id',  'create_time',  'create_user',  'update_time',  'update_user',  'valid',  ]
+            fields['title'] = [ u'序号',  u'姓名',  u'出生',  u'简介',  u'ID',  u'创建时间',  u'创建用户',  u'最后修改时间',  u'最后修改用户',  u'状态',  ]
+            return utils.output_excel (filename, fields, data_list)
+        
         data_list = m_author.get_many (index, length, 'id desc', **cond)
         data_len  = m_author.get_amount (**cond)
         
         data["records"]   = data_list
         data['next_page'] = next_page (index, length, data_len)
-        
+        data['show_confirm'] = web.input().get('show_confirm','')
         return render ('admin/author_list.html', item=data)
 
 
@@ -101,8 +109,8 @@ class author_edit:
         xid  = int(xid)
         
         request = web.input()
-        input_fields = [  'author_name',  'author_birth',  'author_description',  ]
-        nonul_fields = [   'author_name',       ]   #user input fileds, can not be emtpy
+        input_fields = [   'author_name',    'author_birth',    'author_description',               ]
+        nonul_fields = [   'author_name',                   ]   #user input fileds, can not be emtpy
         
         #检查用户是否有权限
         if xid!=0 and not check_right (xid):
@@ -111,23 +119,22 @@ class author_edit:
         
         #检查是否存在 不能为空的字段 输入为空
         if not self.check_input (request, nonul_fields):
-            print 'try to edit data, but found some not-null parameter null'
+            print 'try to edit data, but found some not-null parameter null, table: %s'  % 'author'
             return default_error('some parameter empty')
         
         data = {}
+        
         if xid==0:   #new record
             print 'add new record into database for table author'
             data["id"] = 0
-            data['create_time'] = get_date()
-            data['create_user'] = get_user()
+            data['create_time'] = get_date(); data['create_user'] = get_user()
         else:
             print 'update record into database for table author'
             data = m_author.get_one ( ** {'id': xid})
             if not data:
                 print 'try to update record into database, but fail'
                 raise web.notfound()
-            data['update_time'] = get_date()
-            data['update_user'] = get_user()
+            data['update_time'] = get_date(); data['update_user'] = get_user()
         for field in input_fields:
             new_field = field.replace('author_','',1)
             data[new_field] = request.get(field,'')

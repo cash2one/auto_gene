@@ -2,6 +2,7 @@
 import os
 import math
 import urlparse
+import StringIO
 
 import web
 from jinja2 import Environment,FileSystemLoader
@@ -112,6 +113,52 @@ def excel_to_list (filename, sheets=[], skip_header=1, header_as_key=False):
         for sheet in sheets:
              result.append ( sheet_to_table (data.sheet_by_name(sheet)) )
     return result
+
+
+def output_excel (filename, fields, data, default_value=[]):
+        #filename : 输入的文件名
+        #  fields = {}
+        #    fields['key'] = ['username','total','rectify','warn1','warn2']
+        #    fields['title'] = [u'序号',u'巡查员',u'被查分店数量',u'复查分店数量',u'预警分店',u'重点关注分店']
+        #  data =  数据，是一个列表，列表的内容是字典
+        #  default_value 额外的默认值
+        
+        if len(fields['key']) !=  len(fields['title']) - 1:
+            print fields
+            raise Exception ('the length of title and field not match')
+    
+        data = list(data)
+        import xlwt
+        web.header('Content-Disposition', 'attachment;filename=%s.xls' % filename)
+        web.header('Content-Type', 'application/force-download')
+        web.header('Content-Type', 'application/download')      
+        web.header('Content-Transfer-Encoding', 'binary')           
+        web.header('Cache-Control', 'no-cache')   
+        web.header('Expires', '-1')
+
+        bk = xlwt.Workbook()
+        sheet = bk.add_sheet('sheet1')
+        
+        #第一行说明文字
+        for i,j in enumerate(fields.get('title')):
+            sheet.write(0,i,j)
+        
+        for k in range(len(data)):
+            #序号
+            sheet.write(k+1,0, k+1 )
+            
+            for i,j in enumerate (fields.get('key')):
+                sheet.write(k+1, i+1, data[k].get(j))
+                    
+            #默认值
+            for j in default_value:
+                sheet.write(k+1,i+2,j)
+                i += 1
+            
+        stream = StringIO.StringIO()
+        bk.save(stream)
+        web.header('Content-Length', len(stream.getvalue()))
+        return stream.getvalue()
 
 if __name__ == "__main__":
     temp = excel_to_list ('temp/schema.xlsx', ['admin','table','default_fields'], 1, True)

@@ -53,6 +53,8 @@
             line-height: 30px;
             vertical-align: middle;
         }
+        
+        #data_panel {padding:10px;}
     </style>
 </head>
 <body>
@@ -64,17 +66,47 @@
                 
                 <tr>
                     <td>姓名</td>
-                    <td>{{data.record.name or '' }}</td>
+                    <td>{{data.record.name or '' }} </td>
                 </tr>
                 
                 <tr>
                     <td>出生</td>
-                    <td>{{data.record.birth or '' }}</td>
+                    <td>{{data.record.birth or '' }} </td>
                 </tr>
                 
                 <tr>
                     <td>简介</td>
-                    <td>{{data.record.description or '' }}</td>
+                    <td>{{data.record.description or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>ID</td>
+                    <td>{{data.record.id or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>创建时间</td>
+                    <td>{{data.record.create_time or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>创建用户</td>
+                    <td>{{data.record.create_user or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>最后修改时间</td>
+                    <td>{{data.record.update_time or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>最后修改用户</td>
+                    <td>{{data.record.update_user or '' }} </td>
+                </tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>{{data.record.valid or '' }} </td>
                 </tr>
                 
                 <tr>

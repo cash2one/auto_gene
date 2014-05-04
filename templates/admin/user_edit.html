@@ -44,7 +44,7 @@
             vertical-align: middle;
         }
 
-
+        #data_panel {padding:10px;}
 
     </style>
     <script>
@@ -68,6 +68,18 @@
                  
                 
                 'user_role',
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
                 
                  ];
             for (var i=0; i<fields.length; i++) {
@@ -102,6 +114,8 @@
                     <label>姓名</label>
                     <input type="text" name="user_name" id="user_name" value="{{ data.get('record',{}).get('name') or '' }}">
                     <span id="user_name_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -111,6 +125,8 @@
                     <label>帐号</label>
                     <input type="text" name="user_code" id="user_code" value="{{ data.get('record',{}).get('code') or '' }}">
                     <span id="user_code_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -120,6 +136,8 @@
                     <label>密码</label>
                     <input type="text" name="user_password" id="user_password" value="{{ data.get('record',{}).get('password') or '' }}">
                     <span id="user_password_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -127,8 +145,10 @@
                 
                 <div class="item_input">
                     <label>性别</label>
-                    <input type="number" name="user_sex" id="user_sex" value="{{ data.get('record',{}).get('sex') or '' }}">
+                    <input type="text" name="user_sex" id="user_sex" value="{{ data.get('record',{}).get('sex') or '' }}">
                     <span id="user_sex_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -138,6 +158,8 @@
                     <label>电话</label>
                     <input type="text" name="user_tel" id="user_tel" value="{{ data.get('record',{}).get('tel') or '' }}">
                     <span id="user_tel_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -145,9 +167,29 @@
                 
                 <div class="item_input">
                     <label>角色</label>
-                    <input type="number" name="user_role" id="user_role" value="{{ data.get('record',{}).get('role') or '' }}">
+                    <input type="text" name="user_role" id="user_role" value="{{ data.get('record',{}).get('role') or '' }}">
                     <span id="user_role_msg" ></span>
+                    
+                    
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 <div class="item_input">

@@ -22,10 +22,10 @@ urls = (
 
 #--------------publisher -----------
 #----出版商----
-"/admin/public_list",            "controller.admin.publisher.publisher_list",
-"/admin/public_read/(\d+)",      "controller.admin.publisher.publisher_read",
-"/admin/public_edit/(\d+)",      "controller.admin.publisher.publisher_edit",
-"/admin/public_delete/(\d+)",    "controller.admin.publisher.publisher_delete",
+"/admin/publisher_list",            "controller.admin.publisher.publisher_list",
+"/admin/publisher_read/(\d+)",      "controller.admin.publisher.publisher_read",
+"/admin/publisher_edit/(\d+)",      "controller.admin.publisher.publisher_edit",
+"/admin/publisher_delete/(\d+)",    "controller.admin.publisher.publisher_delete",
 #--------------end publisher -------
 
 #--------------author -----------

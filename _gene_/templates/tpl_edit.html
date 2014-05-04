@@ -44,7 +44,7 @@
             vertical-align: middle;
         }
 
-
+        #data_panel {padding:10px;}
 
     </style>
     <script>
@@ -86,6 +86,12 @@
                     <label>{{field.title}}</label>
                     <input type="{{ field.show_type }}" name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" value="#{ data.get('record',{}).get('{{ field.field }}') or '' }#">
                     <span id="{{item.name}}_{{ field.field }}_msg" ></span>
+                    
+                    {% if field.FK %} 
+                    <a class="button small" href="#" onclick="win=window.open('/admin/{{field.FK}}_list?show_confirm={{item.name}}_{{ field.field }}','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+                        查询
+                    </a>
+                    {% endif %}
                 </div>
                 {% endif %}
                 {% endfor %}

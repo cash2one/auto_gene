@@ -44,7 +44,7 @@
             vertical-align: middle;
         }
 
-
+        #data_panel {padding:10px;}
 
     </style>
     <script>
@@ -64,6 +64,18 @@
                  
                 
                 'book_amount',
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
+                
+                 
                 
                  ];
             for (var i=0; i<fields.length; i++) {
@@ -98,6 +110,8 @@
                     <label>书名</label>
                     <input type="text" name="book_name" id="book_name" value="{{ data.get('record',{}).get('name') or '' }}">
                     <span id="book_name_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -105,8 +119,14 @@
                 
                 <div class="item_input">
                     <label>出版商</label>
-                    <input type="number" name="book_publisher" id="book_publisher" value="{{ data.get('record',{}).get('publisher') or '' }}">
+                    <input type="text" name="book_publisher" id="book_publisher" value="{{ data.get('record',{}).get('publisher') or '' }}">
                     <span id="book_publisher_msg" ></span>
+                    
+                     
+                    <a class="button small" href="#" onclick="win=window.open('/admin/publisher_list?show_confirm=book_publisher','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+                        查询
+                    </a>
+                    
                 </div>
                 
                 
@@ -116,6 +136,8 @@
                     <label>简介</label>
                     <input type="text" name="book_summary" id="book_summary" value="{{ data.get('record',{}).get('summary') or '' }}">
                     <span id="book_summary_msg" ></span>
+                    
+                    
                 </div>
                 
                 
@@ -123,8 +145,14 @@
                 
                 <div class="item_input">
                     <label>作者</label>
-                    <input type="number" name="book_author" id="book_author" value="{{ data.get('record',{}).get('author') or '' }}">
+                    <input type="text" name="book_author" id="book_author" value="{{ data.get('record',{}).get('author') or '' }}">
                     <span id="book_author_msg" ></span>
+                    
+                     
+                    <a class="button small" href="#" onclick="win=window.open('/admin/author_list?show_confirm=book_author','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+                        查询
+                    </a>
+                    
                 </div>
                 
                 
@@ -132,9 +160,29 @@
                 
                 <div class="item_input">
                     <label>数量</label>
-                    <input type="number" name="book_amount" id="book_amount" value="{{ data.get('record',{}).get('amount') or '' }}">
+                    <input type="text" name="book_amount" id="book_amount" value="{{ data.get('record',{}).get('amount') or '' }}">
                     <span id="book_amount_msg" ></span>
+                    
+                    
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 <div class="item_input">
