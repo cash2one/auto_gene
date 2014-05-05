@@ -7,12 +7,12 @@ db = {
       'port': 3306,
       'user': 'root',
       'pawd': '1234',
-      'name': 'auto',
+      'name': 'mc',
 }
 
 
 site = {
-        'title':   'Webpy Template Demo',
+        'title':   u'管理店培训平台',
         'author':  'Makao007',
         'email' :  'makao007@126.com',
 }

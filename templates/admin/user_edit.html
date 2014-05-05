@@ -38,7 +38,7 @@
             float: left;
             margin-right: 15px;
             text-align: right;
-            width: 60px;
+            width: 80px;
             font-size: 14px;
             line-height: 30px;
             vertical-align: middle;
@@ -56,9 +56,7 @@
     </style>
     <script>
         function check () {
-            editor.sync();
-            
-            var fields = [ 'user_name', 'user_code', 'user_password',   'user_role',        ];
+            var fields = [ 'user_memID', 'user_userID', 'user_userCode', 'user_userName',                     ];
             for (var i=0; i<fields.length; i++) {
                 $("#" + fields[i] + "_msg").text("");
             }
@@ -96,6 +94,17 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </head>
 <body>
     <div id="data_panel">
@@ -104,58 +113,196 @@
             <form action="" method="post" accept-charset="utf-8" id="form1">
                 
                 <div class="item_input">
-                    <label>姓名</label>
+                    <label>用户会员编号</label>
                     
                     
-                    <input type="text" name="user_name" id="user_name" value="{{ data.get('record',{}).get('name') or '' }}">
+                        
+                            <input type="text" name="user_memID" id="user_memID" value="{{ data.get('record',{}).get('memID') or '' }}">
+                        
                     
                     
-                    <span id="user_name_msg" > </span>
+                    <span id="user_memID_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>帐号</label>
+                    <label>用户ID</label>
                     
                     
-                    <input type="text" name="user_code" id="user_code" value="{{ data.get('record',{}).get('code') or '' }}">
+                        
+                            <input type="text" name="user_userID" id="user_userID" value="{{ data.get('record',{}).get('userID') or '' }}">
+                        
                     
                     
-                    <span id="user_code_msg" > </span>
+                    <span id="user_userID_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>密码</label>
+                    <label>用户编号</label>
                     
                     
-                    <input type="text" name="user_password" id="user_password" value="{{ data.get('record',{}).get('password') or '' }}">
+                        
+                            <input type="text" name="user_userCode" id="user_userCode" value="{{ data.get('record',{}).get('userCode') or '' }}">
+                        
                     
                     
-                    <span id="user_password_msg" > </span>
+                    <span id="user_userCode_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>性别</label>
+                    <label>用户姓名</label>
                     
                     
-                    <input type="number" name="user_sex" id="user_sex" value="{{ data.get('record',{}).get('sex') or '' }}">
+                        
+                            <input type="text" name="user_userName" id="user_userName" value="{{ data.get('record',{}).get('userName') or '' }}">
+                        
                     
                     
-                    <span id="user_sex_msg" > </span>
+                    <span id="user_userName_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>电话</label>
+                    <label>分店ID</label>
                     
                     
-                    <input type="text" name="user_tel" id="user_tel" value="{{ data.get('record',{}).get('tel') or '' }}">
+                        
+                            <input type="text" name="user_chainID" id="user_chainID" value="{{ data.get('record',{}).get('chainID') or '' }}">
+                        
+                    
+                    
+                    <span id="user_chainID_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>分店编号</label>
+                    
+                    
+                        
+                            <input type="text" name="user_projectID" id="user_projectID" value="{{ data.get('record',{}).get('projectID') or '' }}">
+                        
+                    
+                    
+                    <span id="user_projectID_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>城市ID</label>
+                    
+                    
+                        
+                            <input type="number" name="user_cityID" id="user_cityID" value="{{ data.get('record',{}).get('cityID') or '' }}">
+                        
+                    
+                    
+                    <span id="user_cityID_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>城市名称</label>
+                    
+                    
+                        
+                            <input type="text" name="user_cityName" id="user_cityName" value="{{ data.get('record',{}).get('cityName') or '' }}">
+                        
+                    
+                    
+                    <span id="user_cityName_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>经理ID</label>
+                    
+                    
+                        
+                            <input type="text" name="user_managerID" id="user_managerID" value="{{ data.get('record',{}).get('managerID') or '' }}">
+                        
+                    
+                    
+                    <span id="user_managerID_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>经理姓名</label>
+                    
+                    
+                        
+                            <input type="text" name="user_managerName" id="user_managerName" value="{{ data.get('record',{}).get('managerName') or '' }}">
+                        
+                    
+                    
+                    <span id="user_managerName_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>职位ID</label>
+                    
+                    
+                        
+                            <input type="text" name="user_stationID" id="user_stationID" value="{{ data.get('record',{}).get('stationID') or '' }}">
+                        
+                    
+                    
+                    <span id="user_stationID_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>职位名称</label>
+                    
+                    
+                        
+                            <input type="text" name="user_stationName" id="user_stationName" value="{{ data.get('record',{}).get('stationName') or '' }}">
+                        
+                    
+                    
+                    <span id="user_stationName_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>Email邮件</label>
+                    
+                    
+                        
+                            <input type="text" name="user_email" id="user_email" value="{{ data.get('record',{}).get('email') or '' }}">
+                        
+                    
+                    
+                    <span id="user_email_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>固定电话</label>
+                    
+                    
+                        
+                            <input type="text" name="user_tel" id="user_tel" value="{{ data.get('record',{}).get('tel') or '' }}">
+                        
                     
                     
                     <span id="user_tel_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>角色</label>
+                    <label>手机</label>
                     
                     
-                    <input type="number" name="user_role" id="user_role" value="{{ data.get('record',{}).get('role') or '' }}">
+                        
+                            <input type="text" name="user_mobile" id="user_mobile" value="{{ data.get('record',{}).get('mobile') or '' }}">
+                        
                     
                     
-                    <span id="user_role_msg" > </span>
+                    <span id="user_mobile_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>入职日期</label>
+                    
+                    
+                        
+                            <input type="date" name="user_joinDate" id="user_joinDate" value="{{ data.get('record',{}).get('joinDate') or '' }}">
+                        
+                    
+                    
+                    <span id="user_joinDate_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>状态</label>
+                    
+                    
+                        
+                            {% set value= (data.get('record',{}).get('status').__str__() or '') %}
+                            <select name="user_status" id="user_status" > 
+                                <option value=""></option>
+                                <option value="1" {% if value== '1' %} selected {% endif %} >在职</option>
+<option value="2" {% if value== '2' %} selected {% endif %} >离职</option>
+                            </select>
+                        
+                    
+                    
+                    <span id="user_status_msg" > </span>
                     </div>
                 <div class="item_input">
                 	<label>&nbsp;</label>

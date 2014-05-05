@@ -48,27 +48,127 @@
                  {% endif %}
                  
                     
-                        <label>姓名</label><input type="text" name="user_name" value="{{item.filter.get('name') or '' }}">
+                        <label>用户会员编号</label>
+                        
+                        <input type="text" name="user_memID" value="{{item.filter.get('memID') or '' }}">
+                        
                      
                   
                     
-                        <label>帐号</label><input type="text" name="user_code" value="{{item.filter.get('code') or '' }}">
+                        <label>用户ID</label>
+                        
+                        <input type="text" name="user_userID" value="{{item.filter.get('userID') or '' }}">
+                        
                      
                   
                     
-                        <label>密码</label><input type="text" name="user_password" value="{{item.filter.get('password') or '' }}">
+                        <label>用户编号</label>
+                        
+                        <input type="text" name="user_userCode" value="{{item.filter.get('userCode') or '' }}">
+                        
                      
                   
                     
-                        <label>性别</label><input type="number" name="user_sex" value="{{item.filter.get('sex') or '' }}">
+                        <label>用户姓名</label>
+                        
+                        <input type="text" name="user_userName" value="{{item.filter.get('userName') or '' }}">
+                        
                      
                   
                     
-                        <label>电话</label><input type="text" name="user_tel" value="{{item.filter.get('tel') or '' }}">
+                        <label>分店ID</label>
+                        
+                        <input type="text" name="user_chainID" value="{{item.filter.get('chainID') or '' }}">
+                        
                      
                   
                     
-                        <label>角色</label><input type="number" name="user_role" value="{{item.filter.get('role') or '' }}">
+                        <label>分店编号</label>
+                        
+                        <input type="text" name="user_projectID" value="{{item.filter.get('projectID') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>城市ID</label>
+                        
+                        <input type="number" name="user_cityID" value="{{item.filter.get('cityID') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>城市名称</label>
+                        
+                        <input type="text" name="user_cityName" value="{{item.filter.get('cityName') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>经理ID</label>
+                        
+                        <input type="text" name="user_managerID" value="{{item.filter.get('managerID') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>经理姓名</label>
+                        
+                        <input type="text" name="user_managerName" value="{{item.filter.get('managerName') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>职位ID</label>
+                        
+                        <input type="text" name="user_stationID" value="{{item.filter.get('stationID') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>职位名称</label>
+                        
+                        <input type="text" name="user_stationName" value="{{item.filter.get('stationName') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>Email邮件</label>
+                        
+                        <input type="text" name="user_email" value="{{item.filter.get('email') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>固定电话</label>
+                        
+                        <input type="text" name="user_tel" value="{{item.filter.get('tel') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>手机</label>
+                        
+                        <input type="text" name="user_mobile" value="{{item.filter.get('mobile') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>入职日期</label>
+                        
+                        <input type="date" name="user_joinDate" value="{{item.filter.get('joinDate') or '' }}">
+                        
+                     
+                  
+                    
+                        <label>状态</label>
+                        
+                           {% set value= item.filter.get('status') or '' %}
+                        <select name="user_status" id="user_status" >
+                            <option value="">不限</option>
+                            <option value="1" {% if value== '1' %} selected {% endif %} >在职</option>
+<option value="2" {% if value== '2' %} selected {% endif %} >离职</option>
+                        </select>
+                        
                      
                   
                     
@@ -101,24 +201,117 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        <td>姓名</td>
-                            <td>帐号</td>
-                            <td>密码</td>
-                            <td>性别</td>
-                            <td>电话</td>
-                            <td>角色</td>
+                        <td>用户会员编号</td>
+                            <td>用户ID</td>
+                            <td>用户编号</td>
+                            <td>用户姓名</td>
+                            <td>分店ID</td>
+                            <td>分店编号</td>
+                            <td>城市ID</td>
+                            <td>城市名称</td>
+                            <td>经理ID</td>
+                            <td>经理姓名</td>
+                            <td>职位ID</td>
+                            <td>职位名称</td>
+                            <td>Email邮件</td>
+                            <td>固定电话</td>
+                            <td>手机</td>
+                            <td>入职日期</td>
+                            <td>状态</td>
                             <th>操作</th>
                     </tr>
-
+                    
+                    {% set options_info = {} %}
+                    
+                    
                     {% for line in item.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{ (line.name or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.code or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.password or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.sex or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.tel or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.role or '')|striptags|truncate(30)}}</td>
+                            <td>
+                                
+                                    {{ (line.memID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.userID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.userCode or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.userName or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.chainID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.projectID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.cityID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.cityName or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.managerID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.managerName or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.stationID or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.stationName or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.email or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.tel or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.mobile or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ (line.joinDate or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ options_info.get('status',{}).get(line.status,'')  }}
+                                
+                            </td>
                                 <td>
                                 <a href="/admin/user_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/user_edit/{{ line.id }}" class="button small">编辑</a>

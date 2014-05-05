@@ -38,7 +38,7 @@
             float: left;
             margin-right: 15px;
             text-align: right;
-            width: 60px;
+            width: 80px;
             font-size: 14px;
             line-height: 30px;
             vertical-align: middle;
@@ -56,7 +56,11 @@
     </style>
     <script>
         function check () {
+            {% for field in item.table.fields -%}
+                {% if field.show_type=='textarea' -%}
             editor.sync();
+                {% endif -%}
+            {% endfor -%}
             
             var fields = [ {% for field in item.table.fields -%} {% if field.null=='n' and field.display !='n' %}'{{ item.name }}_{{ field.field }}',{% endif %} {% endfor %} ];
             for (var i=0; i<fields.length; i++) {
@@ -115,7 +119,15 @@
                     {% if field.show_type=='textarea' %} 
                         <textarea name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" style="width:700px;height:400px;visibility:hidden;">#{ data.get('record',{}).get('{{ field.field }}') or '' }#</textarea> 
                     {% else %}
-                    <input type="{{ field.show_type }}" name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" value="#{ data.get('record',{}).get('{{ field.field }}') or '' }#">
+                        {% if field.show_type == 'options' %}
+                            #% set value= (data.get('record',{}).get('{{ field.field }}').__str__() or '') %#
+                            <select name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" > 
+                                <option value=""></option>
+                                {{ field.options }}
+                            </select>
+                        {% else %}
+                            <input type="{{ field.show_type }}" name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" value="#{ data.get('record',{}).get('{{ field.field }}') or '' }#">
+                        {% endif %}
                     {% endif %}
                     
                     <span id="{{item.name}}_{{ field.field }}_msg" > </span>
