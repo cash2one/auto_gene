@@ -30,6 +30,7 @@
 
         .small {padding: 3px 8px; font-size:13px;}
         .disabled {background-color: white;}
+        .hidden { display:none; }
 
         #data_panel {padding:10px;}
         #data_button {height:30px; margin:3px;}
@@ -43,9 +44,6 @@
         <div id="data_sub_title" style="margin:10px 2px;"><strong>用户</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
-                 {% if item.get('show_confirm') %}
-                    <input type="hidden" name="show_confirm" value="{{ item.get('show_confirm') }}" >
-                 {% endif %}
                  
                     
                         <label>姓名</label><input type="text" name="user_name" value="{{item.filter.get('name') or '' }}">
@@ -123,11 +121,8 @@
                                 <a href="/admin/user_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/user_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/user_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>
-                                {% if item.get('show_confirm') %}
-                                <a href="javascript: window.opener.document.getElementById('{{item.get('show_confirm')}}').value={{ line.id }}; window.close();" class="button small">
-                                    确定
-                                </a>
-                                {% endif %}
+                                
+                                <a href='#' class="button small hidden show_confirm" value="{{ line.id }}"> 确定 </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -143,3 +138,27 @@
 </body>
 </html>
 <script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>
+
+<script>
+
+function return_confirm () {
+   if ( window.opener ) {
+    
+        var tmp = window.opener.document.getElementById('user_confirm');
+        if (tmp) {
+            var tmp2 = $("a.show_confirm");
+            tmp2.show();
+            tmp2.click ( function () {
+                console.log ( $(this).attr('value'));
+                console.log ( tmp.value );
+                window.opener.document.getElementById( tmp.value ).value = $(this).attr('value'); 
+                window.close();
+            });
+        }
+    }
+}
+
+$().ready(
+    return_confirm
+);
+</script>

@@ -120,6 +120,7 @@
                     
                     <span id="{{item.name}}_{{ field.field }}_msg" > </span>
                     {% if field.FK -%} 
+                    <input type="hidden" id="{{ field.field }}_confirm" value="{{item.name}}_{{ field.field }}" >
                     <a class="button small" href="#" onclick="win=window.open('/admin/{{field.FK}}_list?show_confirm={{item.name}}_{{ field.field }}','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
                         查询
                     </a>

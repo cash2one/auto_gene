@@ -61,7 +61,6 @@ class user_list:
         
         data["records"]   = data_list
         data['next_page'] = next_page (index, length, data_len)
-        data['show_confirm'] = web.input().get('show_confirm','')
         return render ('admin/user_list.html', item=data)
 
 
