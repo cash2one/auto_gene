@@ -135,12 +135,16 @@
                         
                     
                     
+<<<<<<< HEAD:templates/admin/policy_edit.html
 <<<<<<< HEAD:templates/admin/book_edit.html
                     <span id="book_publisher_msg" > </span>
                     <input type="hidden" id="publisher_confirm" value="book_publisher" >
                     <a class="button small" href="#" onclick="win=window.open('/admin/publisher_list?show_confirm=book_publisher','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
                         查询
                     </a>
+=======
+                    <span id="policy_keywords_msg" > </span>
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
 =======
                     <span id="policy_keywords_msg" > </span>
 >>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
@@ -156,6 +160,7 @@
                     </div>
                 <div class="item_input">
                     <label>分类</label>
+<<<<<<< HEAD:templates/admin/policy_edit.html
                     
                     
                         
@@ -163,6 +168,15 @@
                         
                     
                     
+=======
+                    
+                    
+                        
+                            <input type="number" name="policy_categoryID" id="policy_categoryID" value="{{ data.get('record',{}).get('categoryID') or '' }}">
+                        
+                    
+                    
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
                     <span id="policy_categoryID_msg" > </span>
                     <a class="button small" href="#" onclick="win=window.open('/admin/policy_category_list?show_confirm=policy_categoryID','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
                         查询
@@ -177,10 +191,15 @@
                         
                     
                     
+<<<<<<< HEAD:templates/admin/policy_edit.html
 <<<<<<< HEAD:templates/admin/book_edit.html
                     <span id="book_author_msg" > </span>
                     <input type="hidden" id="author_confirm" value="book_author" >
                     <a class="button small" href="#" onclick="win=window.open('/admin/author_list?show_confirm=book_author','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+=======
+                    <span id="policy_areaID_msg" > </span>
+                    <a class="button small" href="#" onclick="win=window.open('/admin/area_list?show_confirm=policy_areaID','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
 =======
                     <span id="policy_areaID_msg" > </span>
                     <a class="button small" href="#" onclick="win=window.open('/admin/area_list?show_confirm=policy_areaID','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
