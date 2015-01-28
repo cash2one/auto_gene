@@ -46,7 +46,16 @@
              <form action="" method="get" accept-charset="utf-8">
                  {% for field in item.table.fields %}
                     {% if field.display != 'n' %}
-                        <label>{{ field.title }}</label><input type="{{ field.show_type }}" name="{{item.name}}_{{field.field}}" value="#{item.filter.get('{{field.field}}') or '' }#">
+                        <label>{{ field.title }}</label>
+                        {% if field.show_type == 'options' %}
+                           #% set value= item.filter.get('{{field.field}}') or '' %#
+                        <select name="{{item.name}}_{{ field.field }}" id="{{item.name}}_{{ field.field }}" >
+                            <option value="">不限</option>
+                            {{ field.options }}
+                        </select>
+                        {% else %}
+                        <input type="{{ field.show_type }}" name="{{item.name}}_{{field.field}}" value="#{item.filter.get('{{field.field}}') or '' }#">
+                        {% endif %}
                      {% endif %}
                   {% endfor %}
                 <input type="submit" value="搜索" class="button">
@@ -74,13 +83,22 @@
                         {% endfor -%}
                         <th>操作</th>
                     </tr>
-
+                    
+                    #% set options_info = {} %#
+                    
+                    
                     #% for line in item.get('records',[]) %#
                         <tr>
                             <td>#{loop.index}#</td>
                             {% for field in item.table.fields -%}
                                 {% if field.display !='n' -%}
-                            <td>#{ (line.{{ field.field }} or '')|striptags|truncate(30)}#</td>
+                            <td>
+                                {% if field.show_type == 'options' %}
+                                    #{ options_info.get('{{field.field}}',{}).get(line.{{ field.field }},'')  }#
+                                {% else %}
+                                    #{ (line.{{ field.field }} or '')|striptags|truncate(30)}#
+                                {% endif %}
+                            </td>
                                 {% endif -%}
                             {% endfor -%}
                             <td>

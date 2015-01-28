@@ -139,7 +139,14 @@ def gene_admin_index (data):
     content = render ('tpl_admin.html', data=data)
     write_file ('../templates/admin/admin.html', replace_template(content))
   
-
+def filter_comment_lines (lines, key, value):
+    result = []
+    for line in lines:
+        if line.get(key,'').startswith( value ):
+            continue
+        result.append (line)
+    return result
+    
 
 def fields (data, default_fields):
     tables = []
@@ -161,7 +168,22 @@ def fields (data, default_fields):
         
     for table in tables:
         for field in table['fields']:
-            if field['type'] in ['datetime','date']:
+            remark = field['comment'] 
+            if '{' in remark and '}' in remark:
+                tmp = remark.replace('{','').replace('}','')
+                if ',' in tmp:
+                    tmp2 = tmp.split(',')
+                elif u'，' in tmp:
+                    tmp2 = tmp.split(u'，')
+                options = []
+                for tmp3 in tmp2:
+                    tmp4 = tmp3.split('-',1)
+                    tmp5 = "#% if value== '" + tmp4[0] + "' %# selected #% endif %#" 
+                    options.append ( '<option value="%s" %s >%s</option>' % (tmp4[0], tmp5, tmp4[1]))   
+                field['show_type'] = 'options'
+                field['options']   = '\n'.join (options)   
+                field['options_dict'] = dict ( [ (tmp6.split('-',1)[0], tmp6.split('-',1)[1]) for tmp6 in tmp2 ] )   
+            elif field['type'] in ['datetime','date']:
                 field['show_type'] = 'date'
             elif field['type'] in ['tinyint','int','integer']:
                 field['show_type'] = 'number'
@@ -175,6 +197,9 @@ def fields (data, default_fields):
         
 if __name__ == "__main__":
     page, table, default_field = excel_to_list ("./templates/schema.xlsx", ['admin', 'table', 'default_fields'], 1, True)
+    page  = filter_comment_lines (page, 'name', '#')
+    table = filter_comment_lines (table,'table_name', '#')
+    
     tables = fields (table, default_field)   #{'name': 'user', 'fields': ['field': 'name', 'type':'int',...]}
     gene_sql (tables)
     gene_model (tables)

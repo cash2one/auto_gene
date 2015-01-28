@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>政策</title>
+    <style type="text/css" media="screen">
+        html,body {padding:0px; margin:0px;}
+
+        .button {
+            background: #B7EAF7;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #090000;
+            font-size: 14px;
+            text-decoration: none;
+            border: 1px solid #7B94F8;
+            margin-right:5px;
+        }
+
+        .small {padding: 3px 8px; font-size:13px;}
+
+        .item_input {clear:both; clear: both; margin: 15px 0; }
+
+        .basic_input {
+            width: 200px;
+            padding: 5px;
+            height: 30px;
+            font-size: 14px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #c9c9c9;
+        }
+
+
+        label {
+            display: inline-block;
+            float: left;
+            margin-right: 15px;
+            text-align: right;
+            width: 80px;
+            font-size: 14px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+        #data_panel {padding:10px;}
+        
+        form {
+            margin: 0;
+        }
+        textarea {
+            display: block;
+        }
+
+    </style>
+    <script>
+        function check () {
+            editor.sync();
+                var fields = [ 'policy_title',  'policy_content', 'policy_categoryID', 'policy_areaID', 'policy_status',        ];
+            for (var i=0; i<fields.length; i++) {
+                $("#" + fields[i] + "_msg").text("");
+            }
+            
+            
+            for (var i=0; i<fields.length; i++) {
+                var tmp = $("#" + fields[i]);
+                
+                if (tmp.get(0).tagName=='TEXTAREA') {
+                    continue;
+                }
+                
+                if (tmp.val().trim().length == 0) {
+                    $("#" + fields[i] + "_msg").text("<<不能为空");
+                    tmp.focus();
+                    return false;
+                }
+            }
+            
+            $("#form1").submit();
+        }
+        
+    </script>
+    
+    
+    
+    
+        <link rel="stylesheet" href="/static/libs/kindeditor/themes/default/default.css" />
+        <script charset="utf-8" src="/static/libs/kindeditor/kindeditor-min.js"></script>
+        <script charset="utf-8" src="/static/libs/kindeditor/lang/zh_CN.js"></script>
+        <script>
+            var editor;
+            KindEditor.ready(function(K) {
+                editor = K.create('textarea[name="policy_content"]', {
+                    allowFileManager : true
+                });
+
+            });
+        </script>
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</head>
+<body>
+    <div id="data_panel">
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/policy_list">政策</a> 增加</strong></div>
+        <div id="data_add">
+            <form action="" method="post" accept-charset="utf-8" id="form1">
+                
+                <div class="item_input">
+                    <label>标题</label>
+                    
+                    
+                        
+                            <input type="text" name="policy_title" id="policy_title" value="{{ data.get('record',{}).get('title') or '' }}">
+                        
+                    
+                    
+                    <span id="policy_title_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>关键词</label>
+                    
+                    
+                        
+                            <input type="text" name="policy_keywords" id="policy_keywords" value="{{ data.get('record',{}).get('keywords') or '' }}">
+                        
+                    
+                    
+<<<<<<< HEAD:templates/admin/book_edit.html
+                    <span id="book_publisher_msg" > </span>
+                    <input type="hidden" id="publisher_confirm" value="book_publisher" >
+                    <a class="button small" href="#" onclick="win=window.open('/admin/publisher_list?show_confirm=book_publisher','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+                        查询
+                    </a>
+=======
+                    <span id="policy_keywords_msg" > </span>
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
+                    </div>
+                <div class="item_input">
+                    <label>正文内容</label>
+                    
+                     
+                        <textarea name="policy_content" id="policy_content" style="width:700px;height:400px;visibility:hidden;">{{ data.get('record',{}).get('content') or '' }}</textarea> 
+                    
+                    
+                    <span id="policy_content_msg" > </span>
+                    </div>
+                <div class="item_input">
+                    <label>分类</label>
+                    
+                    
+                        
+                            <input type="number" name="policy_categoryID" id="policy_categoryID" value="{{ data.get('record',{}).get('categoryID') or '' }}">
+                        
+                    
+                    
+                    <span id="policy_categoryID_msg" > </span>
+                    <a class="button small" href="#" onclick="win=window.open('/admin/policy_category_list?show_confirm=policy_categoryID','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+                        查询
+                    </a>
+                    </div>
+                <div class="item_input">
+                    <label>区域</label>
+                    
+                    
+                        
+                            <input type="number" name="policy_areaID" id="policy_areaID" value="{{ data.get('record',{}).get('areaID') or '' }}">
+                        
+                    
+                    
+<<<<<<< HEAD:templates/admin/book_edit.html
+                    <span id="book_author_msg" > </span>
+                    <input type="hidden" id="author_confirm" value="book_author" >
+                    <a class="button small" href="#" onclick="win=window.open('/admin/author_list?show_confirm=book_author','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+=======
+                    <span id="policy_areaID_msg" > </span>
+                    <a class="button small" href="#" onclick="win=window.open('/admin/area_list?show_confirm=policy_areaID','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/policy_edit.html
+                        查询
+                    </a>
+                    </div>
+                <div class="item_input">
+                    <label>显示状态</label>
+                    
+                    
+                        
+                            {% set value= (data.get('record',{}).get('status').__str__() or '') %}
+                            <select name="policy_status" id="policy_status" > 
+                                <option value=""></option>
+                                <option value="1" {% if value== '1' %} selected {% endif %} >显示</option>
+<option value="2" {% if value== '2' %} selected {% endif %} >不显示</option>
+                            </select>
+                        
+                    
+                    
+                    <span id="policy_status_msg" > </span>
+                    </div>
+                <div class="item_input">
+                	<label>&nbsp;</label>
+                	<input type="button" class="button" value="保存" onclick="check();">
+                	&nbsp;&nbsp;
+                	<input type="button" class="button" value="返回" onclick="history.go(-1);">
+                </div>
+
+             </form>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="/static/libs/jquery/jquery-1.11.0.min.js" ></script>

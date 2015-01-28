@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>书籍</title>
+    <title>区域</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -41,28 +41,34 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong>书籍</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong>区域</strong></div>
         <div id="data_filter">
              <form action="" method="get" accept-charset="utf-8">
                  
                     
-                        <label>书名</label><input type="text" name="book_name" value="{{item.filter.get('name') or '' }}">
+                        <label>区域名称</label>
+                        
+                        <input type="text" name="area_title" value="{{item.filter.get('title') or '' }}">
+                        
                      
                   
                     
-                        <label>出版商</label><input type="number" name="book_publisher" value="{{item.filter.get('publisher') or '' }}">
+                        <label>显示顺序</label>
+                        
+                        <input type="number" name="area_ord" value="{{item.filter.get('ord') or '' }}">
+                        
                      
                   
                     
-                        <label>简介</label><input type="text" name="book_summary" value="{{item.filter.get('summary') or '' }}">
-                     
-                  
-                    
-                        <label>作者</label><input type="number" name="book_author" value="{{item.filter.get('author') or '' }}">
-                     
-                  
-                    
-                        <label>数量</label><input type="number" name="book_amount" value="{{item.filter.get('amount') or '' }}">
+                        <label>全部区域?</label>
+                        
+                           {% set value= item.filter.get('isall') or '' %}
+                        <select name="area_isall" id="area_isall" >
+                            <option value="">不限</option>
+                            <option value="1" {% if value== '1' %} selected {% endif %} >全部</option>
+<option value="2" {% if value== '2' %} selected {% endif %} >不是全部</option>
+                        </select>
+                        
                      
                   
                     
@@ -83,7 +89,7 @@
 
         <div id="data_info">
             <div id="data_button">
-                <a href="/admin/book_edit/0" class="button" >增加</a>
+                <a href="/admin/area_edit/0" class="button" >增加</a>
                 <a href="javascript:location.reload();" class="button" >刷新</a>
                 <a href="javascript:window.open(location.href+ (location.search? location.search:'?')+ '&__format=xls','_blank');"  class="button" >导出</a>
             </div>
@@ -95,28 +101,50 @@
                 <table border="1">
                     <tr>
                         <th>序号</th>
-                        <td>书名</td>
-                            <td>出版商</td>
-                            <td>简介</td>
-                            <td>作者</td>
-                            <td>数量</td>
+                        <td>区域名称</td>
+                            <td>显示顺序</td>
+                            <td>全部区域?</td>
                             <th>操作</th>
                     </tr>
-
+                    
+                    {% set options_info = {'isall':{1:'全部', 2:'不是全部'} } %}
+                    
+                    
                     {% for line in item.get('records',[]) %}
                         <tr>
                             <td>{{loop.index}}</td>
-                            <td>{{ (line.name or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.publisher or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.summary or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.author or '')|striptags|truncate(30)}}</td>
-                                <td>{{ (line.amount or '')|striptags|truncate(30)}}</td>
+                            <td>
+                                
+                                    {{ (line.title or '')|striptags|truncate(30)}}
+                                
+                            </td>
                                 <td>
+                                
+                                    {{ (line.ord or '')|striptags|truncate(30)}}
+                                
+                            </td>
+                                <td>
+                                
+                                    {{ options_info.get('isall',{}).get(line.isall,'')  }}
+                                
+                            </td>
+                                <td>
+<<<<<<< HEAD:templates/admin/book_list.html
                                 <a href="/admin/book_read/{{ line.id }}" class="button small">查看</a>
                                 <a href="/admin/book_edit/{{ line.id }}" class="button small">编辑</a>
                                 <a href="/admin/book_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>
                                 
                                 <a href='#' class="button small hidden show_confirm" value="{{ line.id }}"> 确定 </a>
+=======
+                                <a href="/admin/area_read/{{ line.id }}" class="button small">查看</a>
+                                <a href="/admin/area_edit/{{ line.id }}" class="button small">编辑</a>
+                                <a href="/admin/area_delete/{{ line.id }}" class="button small" onclick="return confirm('确定删除?');">删除</a>
+                                {% if item.get('show_confirm') %}
+                                <a href="javascript: window.opener.document.getElementById('{{item.get('show_confirm')}}').value={{ line.id }}; window.close();" class="button small">
+                                    确定
+                                </a>
+                                {% endif %}
+>>>>>>> 375e3db7636efd9b954db4686f2c8cfc7b4cd724:templates/admin/area_list.html
                             </td>
                         </tr>
                     {% endfor %}

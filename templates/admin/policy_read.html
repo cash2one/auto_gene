@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>书籍</title>
+    <title>政策</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
         table {
@@ -59,34 +59,39 @@
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/book_list">书籍</a> 查看</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/policy_list">政策</a> 查看</strong></div>
         <div id="data_add">
             {% if data.get('record') %}
             <table border="1">
                 
                 <tr>
-                    <td>书名</td>
-                    <td>{{data.record.name or '' }} </td>
+                    <td>标题</td>
+                    <td>{{data.record.title or '' }} </td>
                 </tr>
                 
                 <tr>
-                    <td>出版商</td>
-                    <td> <a href="/admin/publisher_read/{{data.record.publisher}}">{{data.record.publisher or '' }} </a> </td>
+                    <td>关键词</td>
+                    <td>{{data.record.keywords or '' }} </td>
                 </tr>
                 
                 <tr>
-                    <td>简介</td>
-                    <td>{{data.record.summary or '' }} </td>
+                    <td>正文内容</td>
+                    <td>{{data.record.content or '' }} </td>
                 </tr>
                 
                 <tr>
-                    <td>作者</td>
-                    <td> <a href="/admin/author_read/{{data.record.author}}">{{data.record.author or '' }} </a> </td>
+                    <td>分类</td>
+                    <td> <a href="/admin/policy_category_read/{{data.record.categoryID}}">{{data.record.categoryID or '' }} </a> </td>
                 </tr>
                 
                 <tr>
-                    <td>数量</td>
-                    <td>{{data.record.amount or '' }} </td>
+                    <td>区域</td>
+                    <td> <a href="/admin/area_read/{{data.record.areaID}}">{{data.record.areaID or '' }} </a> </td>
+                </tr>
+                
+                <tr>
+                    <td>显示状态</td>
+                    <td>{{data.record.status or '' }} </td>
                 </tr>
                 
                 <tr>
@@ -123,8 +128,8 @@
                     <td>&nbsp;</td>
                     <td>
                         <input type="button" class="button" value="刷新" onclick="location.reload();" >
-                        <input type="button" class="button" value="编辑" onclick="location.href='/admin/book_edit/{{data.record.id}}';">
-                        <input type="button" class="button" value="删除" onclick="if (confirm('确定删除？')) { location.href='/admin/book_delete/{{data.record.id}}'; }">
+                        <input type="button" class="button" value="编辑" onclick="location.href='/admin/policy_edit/{{data.record.id}}';">
+                        <input type="button" class="button" value="删除" onclick="if (confirm('确定删除？')) { location.href='/admin/policy_delete/{{data.record.id}}'; }">
                         <input type="button" class="button" value="返回" onclick="history.go(-1);">
                     </td>
                 </tr> 	

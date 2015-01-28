@@ -9,7 +9,7 @@ from lib import utils
 session = web.config._session
 
 '''
-用户表，包含普通读者和图书管理员，超级管理员
+用户信息表
 '''
 
 def get_user ():
@@ -38,7 +38,7 @@ class user_list:
         index  = int(index)
         length = int(length)
         
-        fields = [  'user_name',  'user_code',  'user_password',  'user_sex',  'user_tel',  'user_role',  'user_id',  'user_create_time',  'user_create_user',  'user_update_time',  'user_update_user',  'user_valid',  ]
+        fields = [  'user_memID',  'user_userID',  'user_userCode',  'user_userName',  'user_chainID',  'user_projectID',  'user_cityID',  'user_cityName',  'user_managerID',  'user_managerName',  'user_stationID',  'user_stationName',  'user_email',  'user_tel',  'user_mobile',  'user_joinDate',  'user_status',  'user_id',  'user_create_time',  'user_create_user',  'user_update_time',  'user_update_user',  'user_valid',  ]
         cond = {}
         data = {}
         data['filter'] = {}
@@ -52,8 +52,8 @@ class user_list:
             data_list = m_user.get_many (0, 10000000000, 'id desc', **cond)
             filename = u'%s.xls' % '用户'
             fields   = {}
-            fields['key'] = [  'name',  'code',  'password',  'sex',  'tel',  'role',  'id',  'create_time',  'create_user',  'update_time',  'update_user',  'valid',  ]
-            fields['title'] = [ u'序号',  u'姓名',  u'帐号',  u'密码',  u'性别',  u'电话',  u'角色',  u'ID',  u'创建时间',  u'创建用户',  u'最后修改时间',  u'最后修改用户',  u'状态',  ]
+            fields['key'] = [  'memID',  'userID',  'userCode',  'userName',  'chainID',  'projectID',  'cityID',  'cityName',  'managerID',  'managerName',  'stationID',  'stationName',  'email',  'tel',  'mobile',  'joinDate',  'status',  'id',  'create_time',  'create_user',  'update_time',  'update_user',  'valid',  ]
+            fields['title'] = [ u'序号',  u'用户会员编号',  u'用户ID',  u'用户编号',  u'用户姓名',  u'分店ID',  u'分店编号',  u'城市ID',  u'城市名称',  u'经理ID',  u'经理姓名',  u'职位ID',  u'职位名称',  u'Email邮件',  u'固定电话',  u'手机',  u'入职日期',  u'状态',  u'ID',  u'创建时间',  u'创建用户',  u'最后修改时间',  u'最后修改用户',  u'状态',  ]
             return utils.output_excel (filename, fields, data_list)
         
         data_list = m_user.get_many (index, length, 'id desc', **cond)
@@ -108,8 +108,8 @@ class user_edit:
         xid  = int(xid)
         
         request = web.input()
-        input_fields = [   'user_name',    'user_code',    'user_password',    'user_sex',    'user_tel',    'user_role',               ]
-        nonul_fields = [   'user_name',    'user_code',    'user_password',        'user_role',               ]   #user input fileds, can not be emtpy
+        input_fields = [   'user_memID',    'user_userID',    'user_userCode',    'user_userName',    'user_chainID',    'user_projectID',    'user_cityID',    'user_cityName',    'user_managerID',    'user_managerName',    'user_stationID',    'user_stationName',    'user_email',    'user_tel',    'user_mobile',    'user_joinDate',    'user_status',               ]
+        nonul_fields = [   'user_memID',    'user_userID',    'user_userCode',    'user_userName',                                         ]   #user input fileds, can not be emtpy
         
         #检查用户是否有权限
         if xid!=0 and not check_right (xid):

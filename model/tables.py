@@ -8,31 +8,19 @@ class User (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
-class Author (DB):
+class Area (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
-class Publisher (DB):
+class Policy_category (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
-class Book (DB):
+class Policy (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
-class User_book (DB):
-    def __init__ (self, table_name):
-        DB.__init__(self, table_name)
-
-class Book_author (DB):
-    def __init__ (self, table_name):
-        DB.__init__(self, table_name)
-
-class Book_publisher (DB):
-    def __init__ (self, table_name):
-        DB.__init__(self, table_name)
-
-class Article (DB):
+class Policy_user (DB):
     def __init__ (self, table_name):
         DB.__init__(self, table_name)
 
@@ -41,19 +29,13 @@ class Article (DB):
 
 user = User('user')
 
-author = Author('author')
+area = Area('area')
 
-publisher = Publisher('publisher')
+policy_category = Policy_category('policy_category')
 
-book = Book('book')
+policy = Policy('policy')
 
-user_book = User_book('user_book')
-
-book_author = Book_author('book_author')
-
-book_publisher = Book_publisher('book_publisher')
-
-article = Article('article')
+policy_user = Policy_user('policy_user')
 
 
 

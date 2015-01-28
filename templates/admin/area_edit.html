@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>书籍</title>
+    <title>区域</title>
     <style type="text/css" media="screen">
         html,body {padding:0px; margin:0px;}
 
@@ -38,7 +38,7 @@
             float: left;
             margin-right: 15px;
             text-align: right;
-            width: 60px;
+            width: 80px;
             font-size: 14px;
             line-height: 30px;
             vertical-align: middle;
@@ -56,9 +56,7 @@
     </style>
     <script>
         function check () {
-            editor.sync();
-            
-            var fields = [ 'book_name', 'book_publisher',   'book_amount',        ];
+            var fields = [ 'area_title',  'area_isall',        ];
             for (var i=0; i<fields.length; i++) {
                 $("#" + fields[i] + "_msg").text("");
             }
@@ -93,67 +91,50 @@
     
     
     
-    
-    
 </head>
 <body>
     <div id="data_panel">
-        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/book_list">书籍</a> 增加</strong></div>
+        <div id="data_sub_title" style="margin:10px 2px;"><strong><a href="/admin/area_list">区域</a> 增加</strong></div>
         <div id="data_add">
             <form action="" method="post" accept-charset="utf-8" id="form1">
                 
                 <div class="item_input">
-                    <label>书名</label>
+                    <label>区域名称</label>
                     
                     
-                    <input type="text" name="book_name" id="book_name" value="{{ data.get('record',{}).get('name') or '' }}">
+                        
+                            <input type="text" name="area_title" id="area_title" value="{{ data.get('record',{}).get('title') or '' }}">
+                        
                     
                     
-                    <span id="book_name_msg" > </span>
+                    <span id="area_title_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>出版商</label>
+                    <label>显示顺序</label>
                     
                     
-                    <input type="number" name="book_publisher" id="book_publisher" value="{{ data.get('record',{}).get('publisher') or '' }}">
+                        
+                            <input type="number" name="area_ord" id="area_ord" value="{{ data.get('record',{}).get('ord') or '' }}">
+                        
                     
                     
-                    <span id="book_publisher_msg" > </span>
-                    <input type="hidden" id="publisher_confirm" value="book_publisher" >
-                    <a class="button small" href="#" onclick="win=window.open('/admin/publisher_list?show_confirm=book_publisher','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
-                        查询
-                    </a>
+                    <span id="area_ord_msg" > </span>
                     </div>
                 <div class="item_input">
-                    <label>简介</label>
+                    <label>全部区域?</label>
                     
                     
-                    <input type="text" name="book_summary" id="book_summary" value="{{ data.get('record',{}).get('summary') or '' }}">
+                        
+                            {% set value= (data.get('record',{}).get('isall').__str__() or '') %}
+                            <select name="area_isall" id="area_isall" > 
+                                <option value=""></option>
+                                <option value="1" {% if value== '1' %} selected {% endif %} >全部</option>
+<option value="2" {% if value== '2' %} selected {% endif %} >不是全部</option>
+                            </select>
+                        
                     
                     
-                    <span id="book_summary_msg" > </span>
-                    </div>
-                <div class="item_input">
-                    <label>作者</label>
-                    
-                    
-                    <input type="number" name="book_author" id="book_author" value="{{ data.get('record',{}).get('author') or '' }}">
-                    
-                    
-                    <span id="book_author_msg" > </span>
-                    <input type="hidden" id="author_confirm" value="book_author" >
-                    <a class="button small" href="#" onclick="win=window.open('/admin/author_list?show_confirm=book_author','publisher_list', 'height=500,width=800,resizable=yes,scrollbars=yes'); win.focus(); return false;">
-                        查询
-                    </a>
-                    </div>
-                <div class="item_input">
-                    <label>数量</label>
-                    
-                    
-                    <input type="number" name="book_amount" id="book_amount" value="{{ data.get('record',{}).get('amount') or '' }}">
-                    
-                    
-                    <span id="book_amount_msg" > </span>
+                    <span id="area_isall_msg" > </span>
                     </div>
                 <div class="item_input">
                 	<label>&nbsp;</label>
