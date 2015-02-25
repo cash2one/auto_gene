@@ -1,0 +1,75 @@
+<!DOCTYPE >
+<html>
+    <head>
+        <title>My BackEnd Template</title>
+        <link rel="stylesheet" href="/static/css/main.css">
+        <script src="/static/libs/jquery/jquery-1.11.1.min.js"></script>
+    </head>
+    
+    <body>
+        <div id="wraper">
+            <div id="header">
+                <div id="header-left">
+                    <div><strong>慈善捐赠系统</strong> 后台管理</div>
+                </div>
+                <div id="header-right">
+                    <div>{{data.username}}</div>
+                    <div><a href="/admin/logout" onclick="return confirm('确定退出?');">注销</a></div>
+                </div>
+            </div>
+            <div id="main">
+                <div id="main-left">
+                    
+                    <div id="main-left-menu">
+                        <ul>
+                            <li><a href="/admin">首页</a></li>
+                            
+                            <li><a href="/admin/user" target="iFrame1">用户</a></li>
+                            
+                            <li><a href="/admin/book" target="iFrame1">图书</a></li>
+                            
+                            <li><a href="/admin/author" target="iFrame1">作者</a></li>
+                            
+                            <li><a href="/admin/category" target="iFrame1">图书分类</a></li>
+                            
+                            <li><a href="#" onclick="$(this).next().toggle(400);" >报表<span class="expand">&gt;</span></a>
+                                <ul>
+                                    <li>捐赠查询</li>
+                                    <li>用户捐赠汇总表</li>
+                                    <li>捐赠流水表</li>
+                                    <li>捐赠月度表</li>
+                                    <li>捐赠季度表</li>
+                                    <li>捐赠年度表</li>
+                                </ul>
+                            </li>
+                            <li><a href="#" onclick="$(this).next().toggle(400);">系统管理 <span class="expand">&gt;</span></a>
+                                <ul>
+                                    <li><a href="/admin/operator" target="iFrame1">系统管理员</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div id="main-right">
+                      <iframe src="/admin/user" id="main-right-body" name="iFrame1" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="width:99%" onload="this.height=iFrame1.document.body.scrollHeight"> </iframe>
+                </div>
+                
+            </div>
+            <div id="footer">
+                <div>
+                    &copy; Maikao 2015 
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(function () {
+        var width = $(document).width()- 204;
+        $("#main-right").css('width', width+'px');
+    });
+    
+    
+</script>

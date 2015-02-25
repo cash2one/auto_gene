@@ -1,0 +1,73 @@
+
+{% extends "admin/common.html" %}
+
+{% block content %}
+
+<div id="main-right-header" class="subtitle"><a href="/admin/book">图书管理</a> / <span>{% if not data.record.id %}新增{% else %}编辑{%endif%}图书</span></div>
+<div id="main-right-main" >
+<div id="main-right-main-content">
+<form action="" method="post" class="form">
+    <table>
+            
+            
+        <tr>
+            <td><label>标题</label></td>
+            <td><input type="text" name="VARCHAR(100)" value="{{data.record.title or ''}}" placeholder="标题" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>简介</label></td>
+            <td><input type="text" name="VARCHAR(1024)" value="{{data.record.summary or ''}}" placeholder="简介" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>作者</label></td>
+            <td><input type="text" name="VARCHAR(100)" value="{{data.record.author or ''}}" placeholder="作者" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>内容</label></td>
+            <td><input type="text" name="TEXT" value="{{data.record.content or ''}}" placeholder="内容" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>是否有效</label></td>
+            <td><input type="text" name="INTEGER" value="{{data.record.flag or ''}}" placeholder="是否有效" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>备注</label></td>
+            <td><input type="text" name="VARCHAR(1024)" value="{{data.record.remark or ''}}" placeholder="备注" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>创建时间</label></td>
+            <td><input type="text" name="DATETIME" value="{{data.record.created or ''}}" placeholder="创建时间" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td><label>修改时间</label></td>
+            <td><input type="text" name="DATETIME" value="{{data.record.updated or ''}}" placeholder="修改时间" class="textfield"></td>
+        </tr>
+            
+            
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="保存修改" class="savebtn"> </td>
+        </tr>
+    </table>
+    
+</form>
+</div> <!-- / main-right-main-content -->
+
+</div> <!-- / main-right-main-content -->
+
+
+{% endblock %}

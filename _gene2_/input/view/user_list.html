@@ -1,0 +1,80 @@
+{% raw %}
+{% extends "admin/common.html" %}
+{% block content %}
+{% endraw %}
+
+<div id="main-right-header" class="subtitle">{{ data.title }} 管理
+{% raw %}
+{% for msg in get_flashed_messages() %}
+    &nbsp;&nbsp;<span style="background-color: #F0CCCC; color: #000; padding: 5px;">{{msg}}</span>
+{% endfor %}    
+{% endraw %}
+</div>
+<div id="main-right-main" >
+<div id="main-right-main-content">
+
+<div class="edit-menu" style="float:left;">
+    <ul>
+        <li><a href="#" onclick="location.reload();">刷新</a></li>
+        <li><a href="{{data.url}}/edit/0">新增</a></li>
+        <li><a href="#" onclick="change_mul('{{data.url}}/delete/0', '确定要删除这', '个用户?');">删除</a></li>
+        <li><a href="{{data.url}}/import">批量导入</a></li>
+        <li><a href="{{data.url}}/export">导出列表</a></li>
+    </ul>
+</div>
+
+<div class="search-menu">
+    <form method="get" action="">
+        <input type="text" name="keyword"  value="{{data.cur_keyword or ''}}" placeholder="手机号或用户名或姓名" style="width:200px; background-color:white;"><input type="submit" value="查询" >
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" name="xx" onchange="check_all(this)" value="1"></th>
+            <th>#</th>
+            {%- for i in data.fields %}
+            <th>{{i.title}}</th>
+            {%- endfor %}
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% raw %}
+        {% for record in (data.records or []) %}
+        <tr>
+            <td><input type="checkbox" name="record_id" value="{{record.id}}"></td>
+            <td>{{loop.index}}</td>
+        {% endraw %}
+        
+            {%- for i in data.fields %}
+            <td>{{ '{{record.%s}}' % i.name }}</td>
+            {%- endfor %}
+            
+            <td>
+                <div>
+                    <button class="editbtn" onclick="location.href='{{data.url}}/edit/{{'{{record.id}}'}}'">修改</button>
+                    <button class="editbtn" onclick="if (confirm('确定删除?')) location.href='{{data.url}}/delete/{{ '{{record.id}}' }}';">删除</button>
+                </div>
+            </td>
+        </tr>
+        
+        {% raw %}
+        {% endfor %}
+        {% endraw %}
+    </tbody>
+</table>
+
+{% raw %}
+{% if data.records.count()==0 %}
+<p>当前没有任何数据</p>
+{% else %}
+<br/>
+<div >{{ data.pgnation|safe }}</div>
+{% endif %}
+</div> <!-- / main-right-main-content -->
+</div> <!-- / main-right-main -->
+
+{% endblock %}
+{% endraw %}

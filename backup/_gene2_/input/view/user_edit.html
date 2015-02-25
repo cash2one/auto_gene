@@ -1,0 +1,33 @@
+{% raw %}
+{% extends "admin/common.html" %}
+
+{% block content %}
+{% endraw %}
+<div id="main-right-header" class="subtitle"><a href="{{data.url}}">{{data.title}}管理</a> / <span>{{ '{% if not record.id %}新增{% else %}编辑{%endif%}' }}{{data.title}}</span></div>
+<div id="main-right-main" >
+<div id="main-right-main-content">
+<form action="" method="post" class="form">
+    <table>
+        
+        {%- for i in data.fields %}
+            {% if not i[5] %}
+        <tr>
+            <td><label>{{i[4]}}</label></td>
+            <td><input type="text" name="{{i[0]}}" value="{{ "{{data.record.%s or ''}}" % i[0] }}" placeholder="{{i[4]}}" class="textfield"></td>
+        </tr>
+            {% endif %}
+        {%- endfor %}
+            
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="保存修改" class="savebtn"> </td>
+        </tr>
+    </table>
+    
+</form>
+</div> <!-- / main-right-main-content -->
+
+</div> <!-- / main-right-main-content -->
+
+
+{{ '{% endblock %}' }}
