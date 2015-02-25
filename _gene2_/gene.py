@@ -88,18 +88,18 @@ def gene_menu (project_name, objs, tpl):
     data['project_name'] = project_name
     data['menus'] = []
     admin_import = ''
-    common_import = ''
+    model_import = ''
     for obj in objs:
         obj_name = str(obj).split('.')[-1].split("'")[0]
         data['menus'].append ([obj._title, obj._url, obj._name])
         admin_import += 'from admin_%s import *\n' % obj._name
-        common_import += 'from model.model_cms import %s as db_%s\n' % (obj_name, obj_name)
+        model_import += 'from model.model_cms import %s as db_%s\n' % (obj_name, obj_name)
     content = Template (file(tpl).read()).render(data=data)
     file_path = os.path.join(dir_path, tpl.replace('input/',''))
     write_file (file_path, content)
     
-    w = open(os.path.join(dir_path, 'controller', 'common_import.py'), 'a')
-    w.write('\n' + admin_import + '\n' + common_import + '\n')
+    w = open(os.path.join(dir_path, 'controller', 'common_func.py'), 'a')
+    w.write('\n%s\n%s\n' %  (model_import,admin_import))
     w.close()
 
 def gene_static ():
