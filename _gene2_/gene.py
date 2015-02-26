@@ -44,15 +44,25 @@ def extract_info (module):
         field = getattr(table, j)
         field_type = getattr(getattr(table, j), 'type', None)
         if field_type:
+            show_type = str(field_type)
             remark = getattr(getattr(table, j), 'info', '')
             is_pk  = False
             if remark.startswith('*'):
                 is_pk = True
                 remark = remark[1:]
+                show_type = None
+            else:
+                type_dict = [('-',None), ('s', 'select'), ('r', 'radio'), ('c', 'checkbox'), ('t', 'text'), ('a', 'textarea'), ('d', 'date'), ('n', 'number'), ('b', 'boolean')]
+                for tmp1, tmp2 in type_dict:
+                    if remark.startswith(tmp1):
+                        remark = remark[len(tmp1):]
+                        show_type = tmp2
+                        break
+            
             if '-' in remark:
                 order, desc = remark.split('-',1)
                 #model_info.append ( [j,field_type, remark, int(order), desc, is_pk] )
-                model_info.append ({'name':j, 'type':field_type, 'title': desc, 'remark':remark, 'order':int(order), 'primary':is_pk})
+                model_info.append ({'name':j, 'type':show_type, 'title': desc, 'remark':remark, 'order':int(order), 'primary':is_pk})
                        
     #result['fields'] = sorted (model_info, key=lambda x:x[3])
     result['fields'] = sorted (model_info, key=lambda x:x['order'])
@@ -82,7 +92,7 @@ def gene_py(obj, tpl_py):
     file_path = os.path.join(dir_path, 'controller', 'admin_%s.py' % obj['name'])
     write_file (file_path, content)
 
-def gene_menu (project_name, objs, tpl):
+def gene_menu (project_name, objs, tpl, model_name):
     #后台管理的菜单页
     data = {}
     data['project_name'] = project_name
@@ -93,7 +103,7 @@ def gene_menu (project_name, objs, tpl):
         obj_name = str(obj).split('.')[-1].split("'")[0]
         data['menus'].append ([obj._title, obj._url, obj._name])
         admin_import += 'from admin_%s import *\n' % obj._name
-        model_import += 'from model.model_cms import %s as db_%s\n' % (obj_name, obj_name)
+        model_import += 'from model.%s import %s as %s\n' % (model_name, obj_name, obj._dbop)
     content = Template (file(tpl).read()).render(data=data)
     file_path = os.path.join(dir_path, tpl.replace('input/',''))
     write_file (file_path, content)
@@ -130,13 +140,16 @@ def gene_static ():
 if __name__ == "__main__":
     dir_path = output_folder()
     gene_static ()
-    from input.model.model_cms import User, Book , Author, Category
-    db_models = (User, Book , Author, Category)
+    #from input.model.model_cms import User, Book , Author, Category
+    #db_models = (User, Book , Author, Category)
+    
+    from input.model.model_hr import Staff, Department , Position, Salary
+    db_models = (Staff, Department , Position, Salary)
     for tmp in db_models:
         temp = extract_info(tmp)
         gene_html(temp, 'input/view/user_list.html', 'input/view/user_edit.html')
         gene_py  (temp, 'input/controller/user.py')
     
-    gene_menu (u'图书管理系统', db_models, 'input/templates/admin/index.html')
+    gene_menu (u'人事管理系统', db_models, 'input/templates/admin/index.html', 'model_hr')
     
     print "Done"

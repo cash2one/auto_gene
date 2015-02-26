@@ -1,0 +1,84 @@
+
+{% extends "admin/common.html" %}
+{% block content %}
+
+
+<div id="main-right-header" class="subtitle">职位 管理
+
+{% for msg in get_flashed_messages() %}
+    &nbsp;&nbsp;<span style="background-color: #F0CCCC; color: #000; padding: 5px;">{{msg}}</span>
+{% endfor %}    
+
+</div>
+<div id="main-right-main" >
+<div id="main-right-main-content">
+
+<div class="edit-menu" style="float:left;">
+    <ul>
+        <li><a href="#" onclick="location.reload();">刷新</a></li>
+        <li><a href="/admin/position/edit/0">新增</a></li>
+        <li><a href="#" onclick="change_mul('/admin/position/delete/0', '确定要删除这', '个用户?');">删除</a></li>
+        <li><a href="/admin/position/import">批量导入</a></li>
+        <li><a href="/admin/position/export">导出列表</a></li>
+    </ul>
+</div>
+
+<div class="search-menu">
+    <form method="get" action="">
+        <input type="text" name="keyword"  value="" placeholder="手机号或用户名或姓名" style="width:200px; background-color:white;"><input type="submit" value="查询" >
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" name="xx" onchange="check_all(this)" value="1"></th>
+            <th>#</th>
+            <th>ID</th>
+            <th>职位名称</th>
+            <th>是否有效</th>
+            <th>备注</th>
+            <th>创建时间</th>
+            <th>修改时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {% for record in (data.records or []) %}
+        <tr>
+            <td><input type="checkbox" name="record_id" value="{{record.id}}"></td>
+            <td>{{loop.index}}</td>
+        
+            <td>{{record.id}}</td>
+            <td>{{record.name}}</td>
+            <td>{{record.flag}}</td>
+            <td>{{record.remark}}</td>
+            <td>{{record.created}}</td>
+            <td>{{record.updated}}</td>
+            
+            <td>
+                <div>
+                    <button class="editbtn" onclick="location.href='/admin/position/edit/{{record.id}}'">修改</button>
+                    <button class="editbtn" onclick="if (confirm('确定删除?')) location.href='/admin/position/delete/{{record.id}}';">删除</button>
+                </div>
+            </td>
+        </tr>
+        
+        
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+
+{% if data.records.count()==0 %}
+<p>当前没有任何数据</p>
+{% else %}
+<br/>
+<div >{{ data.pgnation|safe }}</div>
+{% endif %}
+</div> <!-- / main-right-main-content -->
+</div> <!-- / main-right-main -->
+
+{% endblock %}

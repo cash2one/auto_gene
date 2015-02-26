@@ -1,0 +1,58 @@
+
+{% extends "admin/common.html" %}
+
+{% block content %}
+
+<div id="main-right-header" class="subtitle"><a href="/admin/salary">薪酬管理</a> / <span>{% if not data.record.id %}新增{% else %}编辑{%endif%}薪酬</span></div>
+<div id="main-right-main" >
+<div id="main-right-main-content">
+<form action="" method="post" class="form">
+    <table>
+        <tr>
+            <td><label>员工</label></td>
+            <td>
+                <input type="text" name="staff" value="{{data.record.staff or ''}}" placeholder="员工" class="textfield">
+                
+            </td>
+        </tr>
+        <tr>
+            <td><label>等级</label></td>
+            <td>
+                <input type="text" name="level" value="{{data.record.level or ''}}" placeholder="等级" class="textfield">
+                
+            </td>
+        </tr>
+        <tr>
+            <td><label>每月薪水</label></td>
+            <td>
+                <input type="text" name="money" value="{{data.record.money or ''}}" placeholder="每月薪水" class="textfield">
+                
+            </td>
+        </tr>
+        <tr>
+            <td><label>是否有效</label></td>
+            <td>
+                <input type="text" name="flag" value="{{data.record.flag or ''}}" placeholder="是否有效" class="textfield">
+                
+            </td>
+        </tr>
+        <tr>
+            <td><label>备注</label></td>
+            <td>
+                <input type="text" name="remark" value="{{data.record.remark or ''}}" placeholder="备注" class="textfield">
+                
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="保存修改" class="savebtn"> </td>
+        </tr>
+    </table>
+    
+</form>
+</div> <!-- / main-right-main-content -->
+
+</div> <!-- / main-right-main-content -->
+
+
+{% endblock %}

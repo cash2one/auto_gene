@@ -10,14 +10,25 @@
     <table>
         
         {%- for i in data.fields %}
-            {% if not i.primary %}
+            {%- if i.type %}
         <tr>
             <td><label>{{i.title}}</label></td>
-            <td><input type="text" name="{{i.type}}" value="{{ "{{data.record.%s or ''}}" % i.name }}" placeholder="{{i.title}}" class="textfield"></td>
+            <td>{%- if i.type in ['text', 'date', 'number'] %}
+                <input type="{{i.type}}" name="{{i.name}}" value="{{ "{{data.record.%s or ''}}" % i.name }}" placeholder="{{i.title}}" class="textfield">
+                {%- elif i.type=='boolean' %}
+                <span>是</span><input type="radio" name="{{i.name}}" value="1" {{ '{% if data.record.' + i.name + ' == 1 %} checked="checked" {% endif %}' }}> &nbsp;&nbsp;&nbsp;&nbsp;
+                <span>否</span><input type="radio" name="{{i.name}}" value="0" {{ '{% if data.record.' + i.name + ' == 0 %} checked="checked" {% endif %}' }} >
+                {%- elif i.type=='textarea' %}
+                <textarea name="{{i.name}}" placeholder="{{i.title}}" >{{ "{{data.record.%s or ''}}" % i.name }}</textarea>
+                {%- elif i.type=='radio' %}
+                <input type="radio" name="{{i.name}}" >
+                {%- else %}
+                <input type="text" name="{{i.name}}" value="{{ "{{data.record.%s or ''}}" % i.name }}" placeholder="{{i.title}}" class="textfield">
+                {% endif %}
+            </td>
         </tr>
-            {% endif %}
+            {%- endif %}
         {%- endfor %}
-            
         <tr>
             <td>&nbsp;</td>
             <td><input type="submit" value="保存修改" class="savebtn"> </td>

@@ -1,7 +1,7 @@
 <!DOCTYPE >
 <html>
     <head>
-        <title>{{data.project_name}} -- 后台管理</title>
+        <title>人事管理系统 -- 后台管理</title>
         <link rel="stylesheet" href="/static/css/main.css">
         <script src="/static/libs/jquery/jquery-1.11.1.min.js"></script>
     </head>
@@ -10,10 +10,10 @@
         <div id="wraper">
             <div id="header">
                 <div id="header-left">
-                    <div><strong>{{data.project_name}}</strong> 后台管理</div>
+                    <div><strong>人事管理系统</strong> 后台管理</div>
                 </div>
                 <div id="header-right">
-                    <div>{{ '{{data.username}}' }}</div>
+                    <div>{{data.username}}</div>
                     <div><a href="/admin/logout" onclick="return confirm('确定退出?');">注销</a></div>
                 </div>
             </div>
@@ -23,9 +23,15 @@
                     <div id="main-left-menu">
                         <ul>
                             <li><a href="/admin">首页</a></li>
-                            {% for obj in data.menus %}
-                            <li><a href="{{obj[1]}}" target="iFrame1">{{obj[0]}}</a></li>
-                            {% endfor %}
+                            
+                            <li><a href="/admin/staff" target="iFrame1">员工</a></li>
+                            
+                            <li><a href="/admin/dept" target="iFrame1">部门</a></li>
+                            
+                            <li><a href="/admin/position" target="iFrame1">职位</a></li>
+                            
+                            <li><a href="/admin/salary" target="iFrame1">薪酬</a></li>
+                            
                             <li><a href="#" onclick="$(this).next().toggle(400);" >报表<span class="expand">&gt;</span></a>
                                 <ul>
                                     <li>捐赠查询</li>

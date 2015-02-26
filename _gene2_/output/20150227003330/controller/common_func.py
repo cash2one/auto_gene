@@ -30,3 +30,13 @@ def requires_auth(f):
             return redirect(config.login_url)
         return f(*args, **kwargs)
     return decorated
+from model.model_hr import Staff as db_Staff
+from model.model_hr import Department as db_Dept
+from model.model_hr import Position as db_Position
+from model.model_hr import Salary as db_Salary
+
+from admin_staff import *
+from admin_dept import *
+from admin_position import *
+from admin_salary import *
+
