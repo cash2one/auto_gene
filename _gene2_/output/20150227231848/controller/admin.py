@@ -9,7 +9,7 @@ from common_func import *
 @requires_auth
 def admin():
     data = {}
-    data['username'] = session['name']
+    data['username'] = session.get('name', 'anyone')
     return render_template('admin/index.html', data=data)
 
 @app.route('/admin/logout')

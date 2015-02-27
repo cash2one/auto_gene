@@ -35,6 +35,7 @@ def extract_info (module):
     result['url']  = getattr(module,'_url','')
     result['title']= getattr(module,'_title','')
     result['dbNa'] = getattr(module,'_dbop''')
+    result['refs'] = getattr(module,'_ref',[])
     
     model_info = []
     table = module
@@ -44,6 +45,7 @@ def extract_info (module):
         field = getattr(table, j)
         field_type = getattr(getattr(table, j), 'type', None)
         if field_type:
+            content = ''
             show_type = str(field_type)
             remark = getattr(getattr(table, j), 'info', '')
             is_pk  = False
@@ -51,8 +53,21 @@ def extract_info (module):
                 is_pk = True
                 remark = remark[1:]
                 show_type = None
+            elif remark.startswith('@'):
+                tmp_type = remark[1:].split('_',1)[0]
+                tmp_obj  = remark.split('_',1)[1].rsplit('_',1)[0]     #dept(id, name)
+                tmp_name = tmp_obj.split('(',1)[0]                     #dept
+                tmp_field= tmp_obj.split('(',1)[1][:-1].split(',')
+                remark   = remark.rsplit('_',1)[1]
+                tmp_key  = '{{i.%s}}' % tmp_field[0]
+                tmp_show = '-'.join ( ['{{i.%s}}' % k for k in tmp_field[1:]] )  
+                if tmp_type == "r":
+                    content = r"""{%% for i in data.%s_list %%}<input type='radio' name='%s' value='%s' {%% if data.record.%s == i.%s %%} checked="checked" {%% endif %%} ><label>%s</label>&nbsp; &nbsp; {%% endfor %%} """ % (tmp_name, j, tmp_key, j, tmp_field[0], tmp_show)
+                elif tmp_type == "s":
+                    content = """<select name="%s" ><option value>%s</option> {%% for i in data.%s_list %%} <option value="%s" {%% if data.record.%s == i.%s %%} selected="selected" {%% endif %%} >%s</option> {%% endfor %%} </select>"""  % (j, ' ', tmp_name, tmp_key, j, tmp_field[0], tmp_show)
+                show_type = 'html'
             else:
-                type_dict = [('-',None), ('s', 'select'), ('r', 'radio'), ('c', 'checkbox'), ('t', 'text'), ('a', 'textarea'), ('d', 'date'), ('n', 'number'), ('b', 'boolean')]
+                type_dict = [('-',None), ('s', 'select'), ('r', 'radio'), ('c', 'checkbox'), ('t', 'text'), ('a', 'textarea'), ('d', 'date'), ('n', 'number'), ('b', 'boolean'), ('e', 'email')]
                 for tmp1, tmp2 in type_dict:
                     if remark.startswith(tmp1):
                         remark = remark[len(tmp1):]
@@ -62,7 +77,7 @@ def extract_info (module):
             if '-' in remark:
                 order, desc = remark.split('-',1)
                 #model_info.append ( [j,field_type, remark, int(order), desc, is_pk] )
-                model_info.append ({'name':j, 'type':show_type, 'title': desc, 'remark':remark, 'order':int(order), 'primary':is_pk})
+                model_info.append ({'name':j, 'type':show_type, 'title': desc, 'remark':remark, 'order':int(order), 'primary':is_pk, 'content':content})
                        
     #result['fields'] = sorted (model_info, key=lambda x:x[3])
     result['fields'] = sorted (model_info, key=lambda x:x['order'])

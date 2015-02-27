@@ -8,6 +8,9 @@ def md5 (s):
 def tojson (data):
     return json.dumps (data)
 
+def get_user ():
+    return session.get('user', 'anyone')
+
 def get_parameter (*p):
     result = {}
     for i in p:
@@ -26,7 +29,7 @@ def default_error (msg):
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        if 'admin_login' not in session:
+        if 'admin_login' in session:
             return redirect(config.login_url)
         return f(*args, **kwargs)
     return decorated

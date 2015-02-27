@@ -13,7 +13,7 @@
             {%- if i.type %}
         <tr>
             <td><label>{{i.title}}</label></td>
-            <td>{%- if i.type in ['text', 'date', 'number'] %}
+            <td>{%- if i.type in ['text', 'date', 'number', 'email'] %}
                 <input type="{{i.type}}" name="{{i.name}}" value="{{ "{{data.record.%s or ''}}" % i.name }}" placeholder="{{i.title}}" class="textfield">
                 {%- elif i.type=='boolean' %}
                 <span>是</span><input type="radio" name="{{i.name}}" value="1" {{ '{% if data.record.' + i.name + ' == 1 %} checked="checked" {% endif %}' }}> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -22,6 +22,8 @@
                 <textarea name="{{i.name}}" placeholder="{{i.title}}" >{{ "{{data.record.%s or ''}}" % i.name }}</textarea>
                 {%- elif i.type=='radio' %}
                 <input type="radio" name="{{i.name}}" >
+                {%- elif i.type=='html' %}
+                {{i.content}}
                 {%- else %}
                 <input type="text" name="{{i.name}}" value="{{ "{{data.record.%s or ''}}" % i.name }}" placeholder="{{i.title}}" class="textfield">
                 {% endif %}

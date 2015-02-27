@@ -26,12 +26,12 @@ class Staff(db.Model):
     username = db.Column(db.String(80), unique=True, info=u'2-用户名')
     password = db.Column(db.String(32), info=u'3-密码')
     name     = db.Column(db.String(100), info=u'4-姓名')
-    posi_id  = db.Column(db.Integer, info=u'5-职位')
-    stat_id  = db.Column(db.Integer, info=u'6-部门')
+    posi_id  = db.Column(db.Integer, info=u'@r_position(id,name)_5-职位')
+    stat_id  = db.Column(db.Integer, info=u'@s_dept(id,name)_6-部门')
     join     = db.Column(db.Date, info=u'd7-入职日期')
     leave    = db.Column(db.Date, info=u'd8-离职日期')
     mobile   = db.Column(db.String(20), info=u'9-手机号码')
-    email    = db.Column(db.String(100), info=u'10-邮箱')
+    email    = db.Column(db.String(100), info=u'e10-邮箱')
     line_mg  = db.Column(db.Integer, info=u'11-直线上司')
     flag     = db.Column(db.Integer, info=u'b21-是否有效')
     remark   = db.Column(db.String(1024), info=u'22-备注')
@@ -42,6 +42,7 @@ class Staff(db.Model):
     _name = u'staff'
     _title= '员工'
     _dbop = 'db_Staff'
+    _ref  = [('db_Dept','position'), ('db_Position', 'dept')]
     
     
 class Department(db.Model):

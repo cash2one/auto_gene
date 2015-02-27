@@ -35,6 +35,8 @@ def admin_staff_edit(xid):
         
     if request.method == "GET":
         data = {}
+        data['position_list'] = db_Dept.query.all()
+        data['dept_list'] = db_Position.query.all() 
         data['record'] = record
         return render_template('admin/staff_edit.html', data=data)
     elif request.method == "POST":

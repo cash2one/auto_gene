@@ -34,7 +34,7 @@ def admin_salary_edit(xid):
             return default_error (u'该数据不存在')
         
     if request.method == "GET":
-        data = {}
+        data = {} 
         data['record'] = record
         return render_template('admin/salary_edit.html', data=data)
     elif request.method == "POST":
@@ -49,10 +49,10 @@ def admin_salary_edit(xid):
         db.session.commit()
         if xid == 0:
             flash (u'添加成功')
-            app.logger.info ("user(%s) add one record(%s) into database " % (session['name'], record))
+            app.logger.info ("user(%s) add one record(%s) into database " % (get_user(), record))
         else:
             flash (u'修改成功')
-            app.logger.info ("user(%s) edit one record(%s) in database " % (session['name'], record))
+            app.logger.info ("user(%s) edit one record(%s) in database " % (get_user(), record))
         return redirect(url_for('admin_salary'))
 
 @app.route('/admin/salary/delete/<int:xid>', methods=['POST', 'GET'])
@@ -65,8 +65,8 @@ def admin_salary_delete(xid):
         record.flag = 0 #修改用户的标识，相当于删除
         db.session.add(record)
         db.session.commit ()
-        app.logger.info (u'admin(%s) delete one record(%s)' % (session['name'], record))
-        flash (u'操作成功，已删除用户%s' % record.name)
+        app.logger.info (u'user(%s) delete one record(%s)' % (get_user(), record))
+        flash (u'成功删除一条数据')
         return redirect (url_for ('admin_salary'))
     else:
         #POST, 删除多行
@@ -74,5 +74,5 @@ def admin_salary_delete(xid):
         xids = [int(i) for i in xids.split(',') if i and i.isdigit() ]
         aa=db.session.query(db_Salary).filter(db_Salary.id.in_ (xids) ).update({'flag':0}, synchronize_session=False)
         db.session.commit ()
-        app.logger.info ('admin(%s) delete %d users, user id list is %s' % (session['name'], aa, xids))
-        return tojson({'msg':u'删除成功'})
+        app.logger.info ('user(%s) delete %d salary records, id list is %s' % (get_user(), aa, xids))
+        return tojson({'msg':u'成功删除%d条数据' % aa})

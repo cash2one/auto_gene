@@ -34,7 +34,7 @@ def admin_dept_edit(xid):
             return default_error (u'该数据不存在')
         
     if request.method == "GET":
-        data = {}
+        data = {} 
         data['record'] = record
         return render_template('admin/dept_edit.html', data=data)
     elif request.method == "POST":

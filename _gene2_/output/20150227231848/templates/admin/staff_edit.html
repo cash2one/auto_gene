@@ -32,15 +32,13 @@
         <tr>
             <td><label>职位</label></td>
             <td>
-                <input type="text" name="posi_id" value="{{data.record.posi_id or ''}}" placeholder="职位" class="textfield">
-                
+                {% for i in data.position_list %}<input type='radio' name='posi_id' value='{{i.id}}' {% if data.record.posi_id == i.id %} checked="checked" {% endif %} ><label>{{i.name}}</label>&nbsp; &nbsp; {% endfor %} 
             </td>
         </tr>
         <tr>
             <td><label>部门</label></td>
             <td>
-                <input type="text" name="stat_id" value="{{data.record.stat_id or ''}}" placeholder="部门" class="textfield">
-                
+                <select name="stat_id" ><option value> </option> {% for i in data.dept_list %} <option value="{{i.id}}" {% if data.record.stat_id == i.id %} selected="selected" {% endif %} >{{i.name}}</option> {% endfor %} </select>
             </td>
         </tr>
         <tr>
@@ -65,8 +63,7 @@
         <tr>
             <td><label>邮箱</label></td>
             <td>
-                <input type="text" name="email" value="{{data.record.email or ''}}" placeholder="邮箱" class="textfield">
-                
+                <input type="email" name="email" value="{{data.record.email or ''}}" placeholder="邮箱" class="textfield">
             </td>
         </tr>
         <tr>
