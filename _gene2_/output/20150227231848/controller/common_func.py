@@ -33,6 +33,28 @@ def requires_auth(f):
             return redirect(config.login_url)
         return f(*args, **kwargs)
     return decorated
+
+
+def make_div (url):
+    def load_map ():
+        data = {}
+        return data
+    
+    def url_to_obj(url):
+        return load_map().get('url')
+        
+    def obj_to_div(obj):
+        if not obj:
+            return ''
+        
+        template = """ 
+        <div >
+            
+        </div> """
+        return template
+        
+    return obj_to_div (url_to_obj(url))
+
 from model.model_hr import Staff as db_Staff
 from model.model_hr import Department as db_Dept
 from model.model_hr import Position as db_Position

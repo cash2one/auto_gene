@@ -63,6 +63,8 @@ def extract_info (module):
                 tmp_show = '-'.join ( ['{{i.%s}}' % k for k in tmp_field[1:]] )  
                 if tmp_type == "r":
                     content = r"""{%% for i in data.%s_list %%}<input type='radio' name='%s' value='%s' {%% if data.record.%s == i.%s %%} checked="checked" {%% endif %%} ><label>%s</label>&nbsp; &nbsp; {%% endfor %%} """ % (tmp_name, j, tmp_key, j, tmp_field[0], tmp_show)
+                if tmp_type == "c":
+                    content = r"""{%% for i in data.%s_list %%}<input type='checkbox' name='%s' value='%s' {%% if data.record.%s == i.%s %%} checked="checked" {%% endif %%} ><label>%s</label>&nbsp; &nbsp; {%% endfor %%} """ % (tmp_name, j, tmp_key, j, tmp_field[0], tmp_show)
                 elif tmp_type == "s":
                     content = """<select name="%s" ><option value>%s</option> {%% for i in data.%s_list %%} <option value="%s" {%% if data.record.%s == i.%s %%} selected="selected" {%% endif %%} >%s</option> {%% endfor %%} </select>"""  % (j, ' ', tmp_name, tmp_key, j, tmp_field[0], tmp_show)
                 show_type = 'html'
