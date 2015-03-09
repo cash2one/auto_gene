@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="IT Tech News ">
+        <title>Hello IT News Archieves</title>
+        <link rel="stylesheet" href="/css/yahoo_pure/pure-min.css">
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/css/yahoo_pure/grids-responsive-old-ie-min.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/css/yahoo_pure/grids-responsive-min.css">
+        <!--<![endif]-->
+        <!--[if lte IE 8]>
+        <link rel="stylesheet" href="/css/layouts/blog-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/css/layouts/blog.css">
+        <!--<![endif]-->
+    </head>
+    <body>
+
+        <div id="layout" class="pure-g">
+            <div class="sidebar pure-u-1 pure-u-md-1-4">
+                <div class="header">
+                    <h1 class="brand-title">Hello IT News</h1>
+
+                    <nav class="nav">
+                        <ul class="nav-list">
+                            <!--
+                            <li class="nav-item">
+                                <a class="pure-button" href="#">Speak</a>
+                            </li>
+                            -->
+                            <li class="nav-item">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a class="pure-button" href="/">&lt;&lt;Home</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="content pure-u-1 pure-u-md-3-4">
+                <div>
+                    <div class="posts">
+                        <h1 class="content-subhead"></h1>
+                        {% for record in records %}
+                        <section class="post">
+                            <header class="post-header">
+                                <h2 class="post-title"><a href="{{record.link}}">{{ record.title }}</a></h2>
+                                <p class="post-meta">{{ record.time }}</p>
+                            </header>
+
+                            <div class="post-description">
+                                <p>{{ record.summary }}</p>
+                            </div>
+                        </section>
+                        {% endfor %}
+                        <p>
+                        {% if has_more %}
+                        <a href="/html/list/list_{{index+1}}.html" class="pure-button" >Older</a>
+                        {% endif %}
+                        {% if index != 0 %}
+                        <a href="/html/list/list_{{index-1}}.html" class="pure-button">Newer</a>
+                        {% endif %}
+                        </p>
+                        <h1 class="content-subhead"> </h1>
+                        <p>&copy; 2015</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

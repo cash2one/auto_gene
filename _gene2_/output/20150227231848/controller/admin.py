@@ -28,9 +28,10 @@ def admin_login ():
             flash (u'用户名密码不能为空')
             return render_template('admin/login.html')
         cond['password'] = md5(cond['password'])
-        user = db.session.query(db_User).filter(db_User.flag==1).filter_by(**cond).first()
+        user = db.session.query(db_Staff).filter(db_Staff.flag==1).filter_by(**cond).first()
         if not user:
             flash (u'用户名密码不正确')
+            app.logger.info ('用户名密码不正确, 用户名:%s, 密码:%s' %  (cond.get('username'), cond.get('password')))
             return render_template('admin/login.html')
         elif user.role != 1:
             flash (u'该用户没有权限')
